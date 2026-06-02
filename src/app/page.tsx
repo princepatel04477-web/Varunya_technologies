@@ -1,65 +1,211 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { AnimatePresence } from "framer-motion";
+import ChamberIntro from "@/components/ChamberIntro";
+import ChamberShowcase from "@/components/ChamberShowcase";
+import ChamberControls from "@/components/ChamberControls";
+import ChamberCanvas from "@/components/ChamberCanvas";
+import { AmbientSynth } from "@/utils/ambientSynth";
+
+// Landing Page components
+import SmoothScroll from "@/components/SmoothScroll";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Statement from "@/components/Statement";
+import Capabilities from "@/components/Capabilities";
+import TechMap from "@/components/TechMap";
+import Process from "@/components/Process";
+import Testimonials from "@/components/Testimonials";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [exhibitionMode, setExhibitionMode] = useState(false);
+  const [isEntered, setIsEntered] = useState(false);
+  const [activeChamber, setActiveChamber] = useState(0);
+  const [language, setLanguage] = useState<"en" | "fr">("en");
+  const [soundOn, setSoundOn] = useState(false);
+
+  const synthRef = useRef<AmbientSynth | null>(null);
+
+  // Initialize synth ref
+  useEffect(() => {
+    synthRef.current = new AmbientSynth();
+    return () => {
+      if (synthRef.current) {
+        synthRef.current.stop();
+      }
+    };
+  }, []);
+
+  // Sync sound playback with state
+  useEffect(() => {
+    if (!synthRef.current) return;
+    if (exhibitionMode && isEntered && soundOn) {
+      synthRef.current.start();
+    } else {
+      synthRef.current.stop();
+    }
+  }, [exhibitionMode, isEntered, soundOn]);
+
+  // Sync URL hash with exhibition mode
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (
+        window.location.hash === "#3d" ||
+        window.location.hash === "#exhibit" ||
+        window.location.hash === "#exhibition"
+      ) {
+        setExhibitionMode(true);
+      }
+    };
+
+    // Check on mount
+    handleHashChange();
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const handleEnter = () => {
+    setIsEntered(true);
+    if (soundOn && synthRef.current) {
+      synthRef.current.start();
+    }
+  };
+
+  const handleExit = () => {
+    setIsEntered(false);
+    setActiveChamber(0);
+    setExhibitionMode(false);
+    // Remove the hash
+    if (
+      window.location.hash === "#3d" ||
+      window.location.hash === "#exhibit" ||
+      window.location.hash === "#exhibition"
+    ) {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+  };
+
+  // Capture vertical mouse wheel scroll to snap chambers, implementing scroll lock.
+  useEffect(() => {
+    if (!exhibitionMode || !isEntered) return;
+
+    let lastScrollTime = Date.now();
+    const scrollCooldown = 1100; // Perfect throttle timing to allow current chamber animation to exit and fade fully
+
+    const handleWheel = (e: WheelEvent) => {
+      // Prevent standard browser scrolling behavior
+      e.preventDefault();
+
+      const now = Date.now();
+      if (now - lastScrollTime < scrollCooldown) return;
+
+      // Ensure that we only register intentional, deliberate scrolls (ignore tiny trackpad jitter)
+      if (Math.abs(e.deltaY) < 15) return;
+
+      if (e.deltaY > 0) {
+        // Scroll down
+        if (activeChamber < 4) {
+          setActiveChamber((prev) => prev + 1);
+          lastScrollTime = now;
+        } else {
+          // Reached final chamber: Scroll down to exit exhibition and transition to Contact form section on landing page
+          handleExit();
+          setTimeout(() => {
+            const contactSection = document.getElementById("contact");
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 100);
+          lastScrollTime = now;
+        }
+      } else if (e.deltaY < 0) {
+        // Scroll up
+        if (activeChamber > 0) {
+          setActiveChamber((prev) => prev - 1);
+          lastScrollTime = now;
+        } else {
+          // Reached first chamber: Scroll up to exit exhibition and transition back to Hero header on landing page
+          handleExit();
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }, 100);
+          lastScrollTime = now;
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [exhibitionMode, isEntered, activeChamber]);
+
+  const enterExhibition = () => {
+    setExhibitionMode(true);
+    window.location.hash = "3d";
+  };
+
+  if (!exhibitionMode) {
+    return (
+      <SmoothScroll>
+        <div className="bg-[#050507] text-[#eae6df] font-sans antialiased selection:bg-white/10 selection:text-white">
+          <Navbar />
+          <Hero onEnterExhibition={enterExhibition} />
+          <main>
+            <Statement />
+            <Capabilities />
+            <TechMap />
+            <Process />
+            <Testimonials />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
+      </SmoothScroll>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="relative min-h-screen bg-[#050507] text-[#eae6df] font-sans antialiased overflow-hidden">
+      {/* Dynamic Background Canvas */}
+      <ChamberCanvas activeChamber={isEntered ? activeChamber : 0} />
+
+      <AnimatePresence mode="wait">
+        {!isEntered ? (
+          <ChamberIntro
+            key="intro"
+            language={language}
+            setLanguage={setLanguage}
+            soundOn={soundOn}
+            setSoundOn={setSoundOn}
+            onEnter={handleEnter}
+            onClose={handleExit}
+          />
+        ) : (
+          <div key="exhibition" className="relative min-h-screen w-full flex flex-col justify-between">
+            {/* Header, Footer, and Pagination Controls */}
+            <ChamberControls
+              language={language}
+              setLanguage={setLanguage}
+              soundOn={soundOn}
+              setSoundOn={setSoundOn}
+              activeChamber={activeChamber}
+              setActiveChamber={setActiveChamber}
+              onExit={handleExit}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+            {/* Chamber Exhibition Content */}
+            <ChamberShowcase
+              activeChamber={activeChamber}
+              language={language}
+            />
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

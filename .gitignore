@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# project-specific large binary files
+*.mp4
+/public/techstack_frame_*.png
+/public/capabilities-*.png
+/public/cinematic-*.png
+/public/techstack_*_restored.png
+/norway-font/
