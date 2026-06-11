@@ -20,6 +20,7 @@ const Statement = dynamic(() => import("@/components/Statement"), { ssr: false }
 const Capabilities = dynamic(() => import("@/components/Capabilities"), { ssr: false });
 const TechMap = dynamic(() => import("@/components/TechMap"), { ssr: false });
 const Process = dynamic(() => import("@/components/Process"), { ssr: false });
+const WhyChooseUs = dynamic(() => import("@/components/WhyChooseUs"), { ssr: false });
 const Contact = dynamic(() => import("@/components/Contact"), { ssr: false });
 const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
 
@@ -178,6 +179,9 @@ export default function Home() {
             </LazySection>
             <LazySection>
               <Process />
+            </LazySection>
+            <LazySection>
+              <WhyChooseUs />
             </LazySection>
             <LazySection>
               <Contact />
