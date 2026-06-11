@@ -3,16 +3,126 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { useMotionConfig } from "@/context/MotionConfigContext";
 
-export default function Capabilities() {
+const GeometryEngine = dynamic(() => import("./GeometryEngine"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const WebGLDistortion = dynamic(() => import("./WebGLDistortion"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-neutral-50 flex items-center justify-center text-[10px] tracking-widest text-[#050507]/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const AIOrchestration = dynamic(() => import("./AIOrchestration"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const AIToolFactory = dynamic(() => import("./AIToolFactory"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const SoftwareArchitecture = dynamic(() => import("./SoftwareArchitecture"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const ConversionFunnel = dynamic(() => import("./ConversionFunnel"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const AutomationEngine = dynamic(() => import("./AutomationEngine"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const WorkflowMap = dynamic(() => import("./WorkflowMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#26292b] flex items-center justify-center text-[10px] tracking-widest text-[#eae5c9]/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+const ChamberPortal = dynamic(() => import("./ChamberPortal"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#050507] flex items-center justify-center text-[10px] tracking-widest text-[#eae5c9]/20 uppercase font-mono">
+      Initializing...
+    </div>
+  ),
+});
+
+
+
+
+interface CapabilitiesProps {
+  onEnterExhibition?: () => void;
+}
+
+export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isChamberCtaHovered, setIsChamberCtaHovered] = useState(false);
+  const { isMobile } = useMotionConfig();
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // 1. Scroll-linked tracking for Card Stacking Deck
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      let index = 0;
+      if (latest < 0.12) index = 0;
+      else if (latest < 0.25) index = 1;
+      else if (latest < 0.38) index = 2;
+      else if (latest < 0.51) index = 3;
+      else if (latest < 0.64) index = 4;
+      else if (latest < 0.77) index = 5;
+      else if (latest < 0.89) index = 6;
+      else if (latest < 0.95) index = 7;
+      else index = 8;
+      setActiveIndex(index);
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress]);
 
   // Mouse Parallax drift for floating 3D chrome assets
   useEffect(() => {
@@ -72,6 +182,7 @@ export default function Capabilities() {
 
   return (
     <div 
+      id="capabilities"
       ref={containerRef} 
       className="relative w-full bg-[#040404] py-0"
       style={{ height: "900vh" }} // Deep vertical scrolling track for 9 locked stacked panels
@@ -202,41 +313,27 @@ export default function Capabilities() {
                 >
                   We design and build gorgeous three-dimensional web spaces that combine physical realism, elegant transitions, and spatial depth, allowing users to interact with your physical products natively in the browser.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#050507] text-[#eae5c9] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  Explore 3D cases
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-[#050507]/5 border border-[#050507]/10 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60 text-[#050507]" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Geometry Engine</span>
-                  <span className="text-xs font-mono font-bold text-[#050507]">Active Mesh</span>
+            {/* Card Right Portrait Graphic Block - Redesigned into Geometry Engine */}
+            {(!isMobile || activeIndex === 0) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden flex-col justify-between p-4 md:p-6 h-[22vh] md:h-auto md:min-h-[300px]">
+                {/* Header Info */}
+                <div className="w-full flex justify-between items-start z-20">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[9px] uppercase tracking-widest font-bold text-white/50" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Geometry Engine</span>
+                    <span className="text-xs font-mono font-bold text-white">Active Mesh</span>
+                  </div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse mt-1" />
                 </div>
-                <div className="w-2.5 h-2.5 rounded-full bg-[#3da58a] animate-pulse" />
-              </div>
-              
-              <div className="my-auto flex flex-col gap-3 font-mono text-[9px] opacity-80 text-[#050507]">
-                <div className="p-3 rounded border border-[#050507]/10 bg-[#050507]/5 flex justify-between">
-                  <span>vertex_buffer_load</span>
-                  <span className="font-bold text-[#3da58a]">LOADED</span>
-                </div>
-                <div className="p-3 rounded border border-[#050507]/10 bg-[#050507]/5 flex justify-between">
-                  <span>camera_dof_focal</span>
-                  <span className="font-bold">4.2m</span>
-                </div>
-              </div>
 
-              <div className="w-full h-1 bg-[#050507]/10 rounded overflow-hidden">
-                <div className="w-[85%] h-full bg-[#050507]" />
+                {/* 3D Render Area */}
+                <div className="absolute inset-0 z-10 w-full h-full pt-16">
+                  <GeometryEngine />
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -272,40 +369,15 @@ export default function Capabilities() {
                 >
                   Choreographed creative applications powered by custom Fragment and Vertex shaders. We build interactive WebGL storytelling spaces that operate flawlessly on mobile, tablet, and high-DPI desktop environments.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#050507] text-[#ffffff] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  See our shader work
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-neutral-50 border border-neutral-100 relative overflow-hidden flex-col justify-between p-6 shadow-sm">
-              <div className="w-full flex justify-between items-start">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60 text-[#050507]" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>GPU Buffers</span>
-                  <span className="text-xs font-mono font-bold text-[#050507]">GL_FLOAT OK</span>
-                </div>
-                <span className="text-[10px] font-mono border border-neutral-300 px-2 py-0.5 rounded text-neutral-500">60 FPS</span>
+            {/* Card Right Portrait Graphic Block - WebGL Fluid Simulation */}
+            {(!isMobile || activeIndex === 1) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <WebGLDistortion />
               </div>
-              
-              <div className="my-auto flex flex-col gap-2.5">
-                <div className="w-full h-8 border border-neutral-200 rounded flex items-center justify-between px-3">
-                  <span className="w-16 h-2 bg-neutral-200 rounded" />
-                  <span className="w-6 h-2 bg-neutral-200 rounded" />
-                </div>
-                <div className="w-full h-24 border border-dashed border-neutral-300 rounded flex flex-col items-center justify-center p-4">
-                  <div className="w-10 h-10 rounded-full border border-neutral-200 border-t-neutral-800 animate-spin" />
-                </div>
-              </div>
-
-              <div className="w-full h-1 bg-neutral-200 rounded overflow-hidden">
-                <div className="w-full h-full bg-neutral-800" />
-              </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -341,39 +413,37 @@ export default function Capabilities() {
                 >
                   Robust agentic pipelines engineered for scalable digital products. We develop secure AI SaaS applications complete with semantic vector indexing, postgres embeddings, multi-model orchestrators, and automated agent pools.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#050507] text-[#3da58a] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  Discover AI SaaS
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-[#050507]/5 border border-[#050507]/10 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60 text-[#050507]" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Docker Pods</span>
-                  <span className="text-xs font-mono font-bold text-[#050507]">Online (0.012s)</span>
-                </div>
-                <div className="w-2.5 h-2.5 rounded-full bg-[#050507]" />
-              </div>
-              
-              <div className="my-auto flex flex-col gap-2 font-mono text-[9px] opacity-80 text-[#050507]">
-                <div className="p-2 rounded border border-[#050507]/10 bg-[#050507]/5">
-                  <span className="opacity-50">$</span> go run main.go
-                </div>
-                <div className="p-2 rounded border border-[#050507]/10 bg-[#050507]/5">
-                  <span className="opacity-50">$</span> pg_vector query --index
-                </div>
-              </div>
+            {/* Card Right Portrait Graphic Block - AI Orchestration */}
+            {(!isMobile || activeIndex === 2) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <AIOrchestration />
+                {/* Unified System Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 md:p-6 pointer-events-none text-[#eae5c9]">
+                  <div>
+                    <span className="font-serif italic uppercase text-[9px] tracking-[0.25em] opacity-40">
+                      AGENT ORCHESTRATOR
+                    </span>
+                    <div className="font-mono font-bold text-[11px] mt-1 text-[#eae5c9] opacity-90">
+                      Multi-Agent Network Online
+                    </div>
+                  </div>
 
-              <div className="w-full h-1 bg-[#050507]/10 rounded overflow-hidden">
-                <div className="w-[95%] h-full bg-[#050507]" />
+
+
+                  <div className="w-full flex flex-col gap-1.5">
+                    <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 h-full w-[45%] bg-[#eae5c9]/35 animate-pulse" />
+                    </div>
+                    <span className="font-mono text-[8px] tracking-widest opacity-40 uppercase">
+                      Agent Coordination Stable
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -409,37 +479,37 @@ export default function Capabilities() {
                 >
                   Fast-to-market AI micro-services, secure browser extensions, and niche API applications engineered to solve singular vertical problems with absolute efficiency, minimal overhead, and massive performance.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#050507] text-[#dfdbd4] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  View micro tools
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-[#050507]/5 border border-[#050507]/10 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60 text-[#050507]" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Chrome Ext</span>
-                  <span className="text-xs font-mono font-bold text-[#050507]">Build: v1.0.4</span>
-                </div>
-                <div className="w-3 h-3 rounded-full bg-[#050507]" />
-              </div>
-              
-              <div className="my-auto flex flex-col gap-2 font-mono text-[9px] opacity-80 text-[#050507]">
-                <div className="p-2.5 rounded border border-[#050507]/10 bg-[#050507]/5 flex justify-between">
-                  <span>API_KEY_LOCK</span>
-                  <span className="font-bold">ACTIVE</span>
-                </div>
-              </div>
+            {/* Card Right Portrait Graphic Block - AI Tool Factory */}
+            {(!isMobile || activeIndex === 3) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <AIToolFactory />
+                {/* Unified System Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 md:p-6 pointer-events-none text-[#eae5c9]">
+                  <div>
+                    <span className="font-serif italic uppercase text-[9px] tracking-[0.25em] opacity-40">
+                      PRODUCT ECOSYSTEM
+                    </span>
+                    <div className="font-mono font-bold text-[11px] mt-1 text-[#eae5c9] opacity-90">
+                      Micro Products Active
+                    </div>
+                  </div>
 
-              <div className="w-full h-1 bg-[#050507]/10 rounded overflow-hidden">
-                <div className="w-[75%] h-full bg-[#050507]" />
+
+
+                  <div className="w-full flex flex-col gap-1.5">
+                    <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 h-full w-[45%] bg-[#eae5c9]/35 animate-pulse" />
+                    </div>
+                    <span className="font-mono text-[8px] tracking-widest opacity-40 uppercase">
+                      Product Network Expanding
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -475,36 +545,37 @@ export default function Capabilities() {
                 >
                   High-performance custom software systems designed for reliability and speed. From secure REST/gRPC architectures, low-latency API layers, and secure cloud environments to specialized desktop-and-spatial tools.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#050507] text-[#ffffff] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  Explore architectures
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-neutral-50 border border-neutral-100 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60 text-[#050507]" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Infrastructure</span>
-                  <span className="text-xs font-mono font-bold text-[#050507]">Cluster: 100% OK</span>
+            {/* Card Right Portrait Graphic Block - Custom Software Architecture */}
+            {(!isMobile || activeIndex === 4) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <SoftwareArchitecture />
+                {/* Unified System Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 md:p-6 pointer-events-none text-[#eae5c9]">
+                  <div>
+                    <span className="font-serif italic uppercase text-[9px] tracking-[0.25em] opacity-40">
+                      SYSTEM ARCHITECTURE
+                    </span>
+                    <div className="font-mono font-bold text-[11px] mt-1 text-[#eae5c9] opacity-90">
+                      Blueprint Engine Loaded
+                  </div>
                 </div>
-                <span className="text-[10px] font-mono border border-neutral-200 px-2 py-0.5 rounded text-neutral-500">AWS / RDS</span>
-              </div>
-              
-              <div className="my-auto flex flex-col gap-2 font-mono text-[9px] text-[#050507] opacity-80">
-                <div className="p-2 rounded border border-neutral-200 bg-neutral-50">
-                  main_cluster_status: ONLINE
-                </div>
-              </div>
 
-              <div className="w-full h-1 bg-neutral-200 rounded overflow-hidden">
-                <div className="w-full h-full bg-neutral-800" />
+
+
+                <div className="w-full flex flex-col gap-1.5">
+                  <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 h-full w-[45%] bg-[#eae5c9]/35 animate-pulse" />
+                  </div>
+                  <span className="font-mono text-[8px] tracking-widest opacity-40 uppercase">
+                    Architecture Integrity Stable
+                  </span>
+                </div>
               </div>
             </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -540,37 +611,37 @@ export default function Capabilities() {
                 >
                   We scale modern digital brands through data-backed performance campaigns, conversion rate optimization (CRO), high-fidelity programmatic landing pages, and advanced search engine optimization (SEO) networks.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#eae5c9] text-[#141415] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  Grow your brand
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-white/5 border border-white/10 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start text-white">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Conversion Index</span>
-                  <span className="text-xs font-mono font-bold">LTV/CAC: 4.8x</span>
-                </div>
-                <div className="w-2.5 h-2.5 rounded-full bg-[#3da58a] animate-pulse" />
-              </div>
-              
-              <div className="my-auto flex flex-col gap-2 font-mono text-[9px] text-[#eae5c9] opacity-90">
-                <div className="p-2 rounded border border-white/10 bg-white/5 flex justify-between">
-                  <span>organic_leads_growth</span>
-                  <span className="font-bold text-[#3da58a]">+245%</span>
-                </div>
-              </div>
+            {/* Card Right Portrait Graphic Block - Conversion Funnel */}
+            {(!isMobile || activeIndex === 5) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <ConversionFunnel />
+                {/* Unified System Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 md:p-6 pointer-events-none text-[#eae5c9]">
+                  <div>
+                    <span className="font-serif italic uppercase text-[9px] tracking-[0.25em] opacity-40">
+                      GROWTH ENGINE
+                    </span>
+                    <div className="font-mono font-bold text-[11px] mt-1 text-[#eae5c9] opacity-90">
+                      Conversion Signals Flowing
+                    </div>
+                  </div>
 
-              <div className="w-full h-1 bg-white/10 rounded overflow-hidden">
-                <div className="w-[88%] h-full bg-[#3da58a]" />
+
+
+                  <div className="w-full flex flex-col gap-1.5">
+                    <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 h-full w-[45%] bg-[#eae5c9]/35 animate-pulse" />
+                    </div>
+                    <span className="font-mono text-[8px] tracking-widest opacity-40 uppercase">
+                      Growth Momentum Increasing
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -606,41 +677,37 @@ export default function Capabilities() {
                 >
                   We engineer autonomous agents and cognitive systems that automate complex corporate operations, from dynamic content pipelines to self-optimizing database tasks, slashing operational latency.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#050507] text-[#eae0d5] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  Automate operations
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-[#050507]/5 border border-[#050507]/10 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60 text-[#050507]" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Agent Pool</span>
-                  <span className="text-xs font-mono font-bold text-[#050507]">12 Active Nodes</span>
-                </div>
-                <div className="w-2.5 h-2.5 rounded-full bg-[#3da58a] animate-pulse" />
-              </div>
-              
-              <div className="my-auto flex flex-col gap-3 font-mono text-[9px] opacity-80 text-[#050507]">
-                <div className="p-3 rounded border border-[#050507]/10 bg-[#050507]/5 flex justify-between">
-                  <span>agent_cognitive_state</span>
-                  <span className="font-bold text-[#3da58a]">ACTIVE</span>
-                </div>
-                <div className="p-3 rounded border border-[#050507]/10 bg-[#050507]/5 flex justify-between">
-                  <span>runtime_cooldown_ms</span>
-                  <span className="font-bold">0ms</span>
-                </div>
-              </div>
+            {/* Card Right Portrait Graphic Block - Automation Engine */}
+            {(!isMobile || activeIndex === 6) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <AutomationEngine />
+                {/* Unified System Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 md:p-6 pointer-events-none text-[#eae5c9]">
+                  <div>
+                    <span className="font-serif italic uppercase text-[9px] tracking-[0.25em] opacity-40">
+                      AUTONOMOUS EXECUTION
+                    </span>
+                    <div className="font-mono font-bold text-[11px] mt-1 text-[#eae5c9] opacity-90">
+                      Workflow Engine Running
+                    </div>
+                  </div>
 
-              <div className="w-full h-1 bg-[#050507]/10 rounded overflow-hidden">
-                <div className="w-[90%] h-full bg-[#050507]" />
+
+
+                  <div className="w-full flex flex-col gap-1.5">
+                    <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 h-full w-[45%] bg-[#eae5c9]/35 animate-pulse" />
+                    </div>
+                    <span className="font-mono text-[8px] tracking-widest opacity-40 uppercase">
+                      Operational Latency Reduced
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
@@ -676,103 +743,97 @@ export default function Capabilities() {
                 >
                   Architecting bespoke digital pathways that connect your legacy databases, modern APIs, and proprietary AI agents. We construct fluid, high-throughput workflows that orchestrate complex systems flawlessly.
                 </p>
-                <button 
-                  className="mt-6 px-5 py-2.5 bg-[#eae5c9] text-[#26292b] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
-                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
-                >
-                  Design workflows
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
 
-            {/* Card Right Portrait Graphic Block */}
-            <div className="hidden md:flex flex-1 mt-6 md:mt-0 md:ml-10 rounded-xl bg-white/5 border border-white/10 relative overflow-hidden flex-col justify-between p-6">
-              <div className="w-full flex justify-between items-start text-white">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] uppercase tracking-widest font-bold opacity-60" style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}>Workflow Engine</span>
-                  <span className="text-xs font-mono font-bold">Sync Rate: 99.98%</span>
-                </div>
-                <div className="w-2.5 h-2.5 rounded-full bg-[#3da58a] animate-pulse" />
-              </div>
-              
-              <div className="my-auto flex flex-col gap-2 font-mono text-[9px] text-[#eae5c9] opacity-90">
-                <div className="p-2 rounded border border-white/10 bg-white/5 flex justify-between">
-                  <span>active_pipeline_sync</span>
-                  <span className="font-bold text-[#3da58a]">SYNCHRONIZED</span>
-                </div>
-              </div>
+            {/* Card Right Portrait Graphic Block - Workflow Map */}
+            {(!isMobile || activeIndex === 7) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#26292b] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <WorkflowMap />
+                {/* Unified System Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 md:p-6 pointer-events-none text-[#eae5c9]">
+                  <div>
+                    <span className="font-serif italic uppercase text-[9px] tracking-[0.25em] opacity-40">
+                      BUSINESS CHOREOGRAPHY
+                    </span>
+                    <div className="font-mono font-bold text-[11px] mt-1 text-[#eae5c9] opacity-90">
+                      Workflow Synchronization Active
+                    </div>
+                  </div>
 
-              <div className="w-full h-1 bg-white/10 rounded overflow-hidden">
-                <div className="w-[94%] h-full bg-[#3da58a]" />
+
+
+                  <div className="w-full flex flex-col gap-1.5">
+                    <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 h-full w-[45%] bg-[#eae5c9]/35 animate-pulse" />
+                    </div>
+                    <span className="font-mono text-[8px] tracking-widest opacity-40 uppercase">
+                      Pipeline Harmony Maintained
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* --------------------------------------------------
-              CARD 09: CLIENT TESTIMONIALS (White bg)
+              CARD 09: CLIENT SHOWCASE (Dark bg) - living portal experience
              -------------------------------------------------- */}
           <motion.div 
             style={{ y: card9Y }}
-            className="absolute w-full h-full bg-[#ffffff] rounded-2xl md:rounded-3xl p-6 md:p-14 flex flex-col justify-between overflow-hidden shadow-2xl border border-white/5 origin-bottom text-[#050507]"
+            className="absolute w-full h-full bg-[#050507] rounded-2xl md:rounded-3xl p-6 md:p-14 flex flex-col md:flex-row justify-between items-stretch overflow-hidden shadow-2xl border border-white/10 origin-bottom text-[#eae5c9]"
           >
-            <div className="w-full flex justify-between items-start">
-              <div className="flex flex-col">
-                <span 
-                  className="text-[10px] tracking-[0.25em] text-neutral-400 font-bold uppercase"
+            <div className="flex-[1.2] flex flex-col justify-between text-[#eae5c9] z-10">
+              <div>
+                <div className="flex justify-between items-center w-full">
+                  <div className="flex flex-col">
+                    <span 
+                      className="text-[10px] tracking-[0.25em] text-[#eae5c9]/60 font-bold uppercase"
+                      style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
+                    >
+                      Interactive Showcase
+                    </span>
+                    <span className="font-mono text-xs text-[#eae5c9]/50 mt-1">WebGL 3D Experience</span>
+                  </div>
+                  <span className="font-mono text-sm tracking-widest font-semibold opacity-70 text-[#eae5c9]/60">09</span>
+                </div>
+
+                <div className="mt-8 md:mt-12">
+                  <h2 
+                    className="text-4xl md:text-[3.5rem] font-normal leading-[1.05] tracking-[-0.01em] text-[#eae5c9] mb-4"
+                    style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
+                  >
+                    Project Chamber
+                  </h2>
+                  <p 
+                    className="text-base md:text-lg font-light leading-relaxed text-[#eae5c9]/80 max-w-lg mt-6"
+                    style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
+                  >
+                    Step into our hardware-accelerated 3D museum. Walk through spatial case studies, dynamic agent interactions, and custom user interface systems designed for high-performance impact.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 md:mt-0 flex justify-between items-center border-t border-white/10 pt-6">
+                <button 
+                  onClick={onEnterExhibition}
+                  onMouseEnter={() => setIsChamberCtaHovered(true)}
+                  onMouseLeave={() => setIsChamberCtaHovered(false)}
+                  className="px-6 py-3 bg-[#eae5c9] text-[#050507] text-xs font-semibold rounded-lg flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02] cursor-pointer"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 400 }}
                 >
-                  What our clients say
-                </span>
-                <span className="font-mono text-xs text-neutral-400 mt-1">5/5 Verified Rating</span>
-              </div>
-              <span className="text-7xl font-serif text-neutral-200 select-none leading-none -mt-4">&ldquo;</span>
-            </div>
-
-            <div className="my-auto py-4">
-              <p 
-                className="text-lg md:text-3xl font-light leading-relaxed md:leading-snug text-[#050507] tracking-tight max-w-4xl"
-                style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
-              >
-                &ldquo;Varunya succeeded in bringing technical rigor and absolute aesthetic intelligence to the core of our digital platform. They did not just build a website—they engineered an interactive experience that completely redefined our brand identity.&rdquo;
-              </p>
-            </div>
-
-            <div className="flex justify-between items-center border-t border-neutral-100 pt-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-neutral-200 overflow-hidden relative border border-neutral-300">
-                  <Image 
-                    src="/images/chrome_3d_dove.png" 
-                    alt="Elena Rostova Avatar" 
-                    fill 
-                    className="object-cover scale-150 saturate-0"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span 
-                    className="text-sm font-semibold tracking-tight text-[#050507]"
-                    style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
-                  >
-                    Elena Rostova
-                  </span>
-                  <span 
-                    className="text-xs text-neutral-400"
-                    style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
-                  >
-                    Chief Product Officer, Liikku International
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-600">
-                  ←
-                </button>
-                <button className="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-600">
-                  →
+                  Open Exhibition Chamber
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
                 </button>
               </div>
             </div>
+
+            {/* Card Right Portrait Graphic Block - Living Portal */}
+            {(!isMobile || activeIndex === 8) && (
+              <div className="flex flex-1 mt-4 md:mt-0 md:ml-10 rounded-xl bg-[#050507] border border-white/10 relative overflow-hidden h-[22vh] md:h-auto md:min-h-[300px]">
+                <ChamberPortal isHovered={isChamberCtaHovered} />
+              </div>
+            )}
           </motion.div>
 
         </div>

@@ -40,7 +40,7 @@ export default function Navbar() {
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${
           scrolled || mobileMenuOpen
             ? "bg-bg-dark/90 backdrop-blur-md py-4 border-white/5"
@@ -84,7 +84,7 @@ export default function Navbar() {
               onClick={() => scrollToSection("contact")}
               className="hidden sm:flex px-5 py-2.5 rounded-full border border-white/20 text-xs md:text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-300 ease-in-out cursor-pointer font-medium h-[40px] items-center justify-center"
             >
-              LET'S TALK
+              {"LET'S TALK"}
             </button>
 
             {/* Hamburger Toggle */}
@@ -132,7 +132,7 @@ export default function Navbar() {
                 className="text-left text-3xl font-display font-light tracking-wide text-[#d4af37] hover:text-[#e5c158] transition-colors duration-300 mt-4 border-t border-white/15 pt-8"
               >
                 <span className="font-mono text-xs text-[#d4af37]/45 mr-4">04</span>
-                Let's Talk
+                {"Let's Talk"}
               </motion.button>
             </div>
             

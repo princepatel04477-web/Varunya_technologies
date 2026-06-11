@@ -8,17 +8,20 @@ import ChamberControls from "@/components/ChamberControls";
 import ChamberCanvas from "@/components/ChamberCanvas";
 import { AmbientSynth } from "@/utils/ambientSynth";
 
-// Landing Page components
+import dynamic from "next/dynamic";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Statement from "@/components/Statement";
-import Capabilities from "@/components/Capabilities";
-import TechMap from "@/components/TechMap";
-import Process from "@/components/Process";
-import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
+import LazySection from "@/components/LazySection";
+
+// Dynamically load heavy components below the fold
+const Statement = dynamic(() => import("@/components/Statement"), { ssr: false });
+const Capabilities = dynamic(() => import("@/components/Capabilities"), { ssr: false });
+const TechMap = dynamic(() => import("@/components/TechMap"), { ssr: false });
+const Process = dynamic(() => import("@/components/Process"), { ssr: false });
+const Contact = dynamic(() => import("@/components/Contact"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
 
 export default function Home() {
   const [exhibitionMode, setExhibitionMode] = useState(false);
@@ -26,6 +29,13 @@ export default function Home() {
   const [activeChamber, setActiveChamber] = useState(0);
   const [language, setLanguage] = useState<"en" | "fr">("en");
   const [soundOn, setSoundOn] = useState(false);
+  const [loaderFinished, setLoaderFinished] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && sessionStorage.getItem("vt_loader_shown")) {
+      setLoaderFinished(true);
+    }
+  }, []);
 
   const synthRef = useRef<AmbientSynth | null>(null);
 
@@ -108,7 +118,7 @@ export default function Home() {
 
       if (e.deltaY > 0) {
         // Scroll down
-        if (activeChamber < 4) {
+        if (activeChamber < 3) {
           setActiveChamber((prev) => prev + 1);
           lastScrollTime = now;
         } else {
@@ -153,17 +163,29 @@ export default function Home() {
     return (
       <SmoothScroll>
         <div className="bg-[#050507] text-[#eae6df] font-sans antialiased selection:bg-white/10 selection:text-white">
+          <Loader onComplete={() => setLoaderFinished(true)} />
           <Navbar />
-          <Hero onEnterExhibition={enterExhibition} />
+          <Hero onEnterExhibition={enterExhibition} loaderFinished={loaderFinished} />
           <main>
-            <Statement />
-            <Capabilities />
-            <TechMap />
-            <Process />
-            <Testimonials />
-            <Contact />
+            <LazySection>
+              <Statement />
+            </LazySection>
+            <LazySection>
+              <Capabilities onEnterExhibition={enterExhibition} />
+            </LazySection>
+            <LazySection>
+              <TechMap />
+            </LazySection>
+            <LazySection>
+              <Process />
+            </LazySection>
+            <LazySection>
+              <Contact />
+            </LazySection>
           </main>
-          <Footer />
+          <LazySection>
+            <Footer />
+          </LazySection>
         </div>
       </SmoothScroll>
     );
@@ -209,3 +231,4 @@ export default function Home() {
     </div>
   );
 }
+

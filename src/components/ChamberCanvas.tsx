@@ -24,6 +24,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
+    const isMobile = window.innerWidth < 768;
 
     // Mouse coordinates
     const mouse = {
@@ -76,7 +77,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
 
     const initDust = () => {
       dustParticles.length = 0;
-      const count = 100;
+      const count = isMobile ? 30 : 100;
       for (let i = 0; i < count; i++) {
         dustParticles.push({
           x: Math.random() * width,
@@ -99,7 +100,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
 
       if (chamber === 0) {
         // Aether OS: Rotating orbit rings (vector fields)
-        const count = 120;
+        const count = isMobile ? 40 : 120;
         const centerX = width / 2;
         const centerY = height / 2;
         for (let i = 0; i < count; i++) {
@@ -121,7 +122,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
         }
       } else if (chamber === 1) {
         // Lumen Network: Grid nodes with connection pulses
-        const spacing = 60;
+        const spacing = isMobile ? 120 : 60;
         for (let x = spacing; x < width; x += spacing) {
           for (let y = spacing; y < height; y += spacing) {
             if (Math.random() > 0.4) {
@@ -141,17 +142,18 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
         }
       } else if (chamber === 2) {
         // Solas Spatial: 3D Wave points
-        const cols = 25;
-        const rows = 15;
-        const startX = (width - cols * 35) / 2;
-        const startY = (height - rows * 35) / 2;
+        const cols = isMobile ? 12 : 25;
+        const rows = isMobile ? 8 : 15;
+        const spacingVal = isMobile ? 50 : 35;
+        const startX = (width - cols * spacingVal) / 2;
+        const startY = (height - rows * spacingVal) / 2;
         for (let c = 0; c < cols; c++) {
           for (let r = 0; r < rows; r++) {
             particles.push({
-              x: startX + c * 35,
-              y: startY + r * 35,
-              ox: startX + c * 35,
-              oy: startY + r * 35,
+              x: startX + c * spacingVal,
+              y: startY + r * spacingVal,
+              ox: startX + c * spacingVal,
+              oy: startY + r * spacingVal,
               vx: 0,
               vy: 0,
               size: 1.2,
@@ -162,7 +164,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
         }
       } else {
         // Capabilities & Contact: Ambient drifting stars
-        const count = 80;
+        const count = isMobile ? 25 : 80;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -182,7 +184,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
     initParticles();
 
     // Track active chamber changes inside loop to trigger transition
-    let currentChamber = activeChamber;
+    let currentChamber = activeChamberRef.current;
 
     // Animation Loop
     const animate = () => {
@@ -355,7 +357,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
         particles.forEach((p) => {
           const z = Math.sin(time * 1.5 + (p.phase || 0)) * 12;
           
-          let targetX = p.ox;
+          const targetX = p.ox;
           let targetY = p.oy + z;
 
           // Mouse influence

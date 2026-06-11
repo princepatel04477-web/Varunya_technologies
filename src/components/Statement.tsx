@@ -22,7 +22,7 @@ export default function Statement() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let particles: any[] = [];
+    let particles: Particle[] = [];
     const particleCount = 28;
 
     const resizeCanvas = () => {
@@ -143,7 +143,7 @@ export default function Statement() {
       );
 
       // 2. Active Spotlight Wave Character Animation (Directly Scroll Connected at 60 FPS)
-      const chars = gsap.utils.toArray(".char");
+      const chars = gsap.utils.toArray<HTMLElement>(".char");
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -153,7 +153,7 @@ export default function Statement() {
         },
       });
 
-      chars.forEach((char: any, i: number) => {
+      chars.forEach((char, i: number) => {
         // Step A: Illuminate with glowing Spotlight (opacity: 1, translate: 0, text-shadow glow)
         tl.to(
           char,
@@ -260,7 +260,7 @@ export default function Statement() {
             style={{ fontFamily: "var(--font-norway), 'Norway', sans-serif" }}
           >
             {words.map((word, wIdx) => (
-              <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
+              <span key={wIdx} className="inline-block whitespace-nowrap" style={{ marginRight: "0.25em" }}>
                 {word.split("").map((char, cIdx) => (
                   <span
                     key={cIdx}

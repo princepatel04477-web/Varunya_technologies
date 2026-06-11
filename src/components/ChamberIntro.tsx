@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface ChamberIntroProps {
@@ -22,16 +23,16 @@ export default function ChamberIntro({
 }: ChamberIntroProps) {
   const content = {
     en: {
-      headline: "Five systems cross the night.",
-      sub: "You enter alone into a dark room. Five chambers breathe within — spatial systems, decentralized networks, and editorial technology layers. Let your gaze wander. Click the bright points to enter into detail.",
+      headline: "Four projects. One digital ecosystem.",
+      sub: "Each chamber reveals a unique product, platform, or business solution. Explore the architecture, technology, and impact behind every project engineered by Varunya Technologies.",
       enter: "ENTER",
       soundWarning: "ACTIVATE SOUND TO ENTER IN SILENCE",
       soundActive: "SOUND ON",
       soundMute: "MUTE",
     },
     fr: {
-      headline: "Cinq systèmes traversent la nuit.",
-      sub: "Vous entrez seul dans une pièce sombre. Cinq chambres respirent à l'intérieur — systèmes spatiaux, réseaux décentralisés et couches technologiques éditoriales. Laissez votre regard errer. Cliquez sur les points lumineux pour entrer dans le détail.",
+      headline: "Quatre projets. Un écosystème numérique.",
+      sub: "Chaque chambre révèle un produit, une plateforme ou une solution d'affaires unique. Explorez l'architecture, la technologie et l'impact de chaque projet conçu par Varunya Technologies.",
       enter: "ENTRER",
       soundWarning: "ACTIVEZ LE SON POUR ENTRER DANS LE SILENCE",
       soundActive: "SON ACTIF",
@@ -52,15 +53,26 @@ export default function ChamberIntro({
       <div className="flex justify-between items-center w-full z-10">
         <button
           onClick={onClose}
-          className="flex items-center gap-3 hover:opacity-85 transition-opacity duration-300 cursor-pointer"
+          className="flex items-center gap-3 group focus:outline-none -my-8 cursor-pointer text-left"
+          title="Exit to Site"
         >
-          <span className="font-display font-bold text-lg tracking-[0.25em] text-[#eae6df]">
-            VARUNYA
-          </span>
-          <span className="hidden sm:inline-block h-[1px] w-6 bg-[#d4af37]/30" />
-          <span className="hidden sm:inline-block text-[10px] tracking-widest text-[#d4af37] font-medium uppercase">
-            STUDIO EXHIBITION
-          </span>
+          <Image
+            src="/VT_logo.png"
+            alt="Varunya Logo"
+            width={112}
+            height={112}
+            className="h-16 w-16 sm:h-28 sm:w-28 object-contain group-hover:scale-105 transition-transform duration-300 invert hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]"
+            priority
+          />
+          <span className="hidden sm:inline-block h-[1px] w-6 bg-[#d4af37]/35" />
+          <div className="hidden sm:flex flex-col text-left">
+            <span className="text-[10px] tracking-widest text-[#d4af37] font-semibold uppercase leading-tight">
+              VARUNYA TECHNOLOGIES
+            </span>
+            <span className="text-[8px] tracking-widest text-[#eae6df]/45 uppercase mt-0.5 font-medium">
+              Interactive Project Chambers
+            </span>
+          </div>
         </button>
 
         <div className="flex items-center gap-3 sm:gap-6 text-[10px] sm:text-xs font-medium tracking-widest">
@@ -125,7 +137,7 @@ export default function ChamberIntro({
           transition={{ delay: 0.3, duration: 1 }}
           className="text-[10px] tracking-[0.3em] font-bold text-[#d4af37] mb-6 uppercase"
         >
-          LUMEN — LA CHAMBRE
+          VARUNYA TECHNOLOGIES — DIGITAL EXHIBITION
         </motion.span>
 
         {/* Headline */}
@@ -176,7 +188,7 @@ export default function ChamberIntro({
           {t.soundWarning}
         </span>
         <div className="flex gap-1.5 justify-center">
-          {[...Array(5)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <div
               key={i}
               className={`w-1.5 h-1.5 rounded-full border border-white/20 ${

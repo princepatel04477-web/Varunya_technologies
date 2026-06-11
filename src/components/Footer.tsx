@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Footer() {
@@ -37,13 +36,20 @@ export default function Footer() {
               NETWORK
             </span>
             <div className="flex flex-col gap-2">
-              {["Awwwards", "GitHub", "Twitter", "LinkedIn"].map((link) => (
+              {[
+                { name: "Awwwards", url: "https://www.awwwards.com" },
+                { name: "GitHub", url: "https://github.com" },
+                { name: "Twitter", url: "https://twitter.com" },
+                { name: "LinkedIn", url: "https://linkedin.com" },
+              ].map((link) => (
                 <a
-                  key={link}
-                  href="#"
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-xs text-muted hover:text-white transition-colors duration-300 self-start"
                 >
-                  {link}
+                  {link.name}
                 </a>
               ))}
             </div>
@@ -56,8 +62,8 @@ export default function Footer() {
             </span>
             <p className="text-xs text-muted leading-relaxed font-light">
               Varunya Technologies LLC<br />
-              San Francisco, CA<br />
-              <span className="font-mono text-[10px] text-white/40">37° 46' 26\" N, 122° 24' 39\" W</span>
+              Surat, Gujarat — India<br />
+              <span className="font-mono text-[10px] text-white/40">{"21° 10′ N, 72° 50′ E"}</span>
             </p>
           </div>
         </div>
