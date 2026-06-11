@@ -67,25 +67,28 @@ export default function WhyChooseUs() {
     >
       <div className="sticky-container sticky top-0 h-screen min-h-[100dvh] w-full overflow-hidden flex flex-col justify-center items-center">
         
-        {/* Subtle noise texture */}
-        <div 
-          className="absolute inset-0 opacity-[0.015] pointer-events-none z-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-          }}
-        />
+        {/* Layer 1 — Background Layer */}
+        <div className="background-layer absolute inset-0 bg-[#050505] z-0 pointer-events-none overflow-hidden">
+          {/* Subtle noise texture */}
+          <div 
+            className="absolute inset-0 opacity-[0.015] pointer-events-none"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
+              `,
+              backgroundSize: "60px 60px",
+            }}
+          />
+        </div>
 
-        {/* Progress Indicator */}
+        {/* Layer 2 — Progress Indicator */}
         <motion.div 
           style={{ scaleX, transformOrigin: "left" }}
           className="progress-indicator absolute top-0 left-0 right-0 h-1 bg-[#E02020] z-30"
         />
 
-        {/* Content Stage */}
+        {/* Layer 3 — Content Stage */}
         <div className="content-stage w-full max-w-[900px] mx-auto text-center px-6 pointer-events-none relative z-10">
           <AnimatePresence mode="wait">
             <motion.div
