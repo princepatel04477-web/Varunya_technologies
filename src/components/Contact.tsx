@@ -12,16 +12,20 @@ export default function Contact() {
     budget: "",
     details: "",
     name: "",
+    company: "",
     email: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
   const projectTypes = [
-    "AI SaaS",
-    "Custom Software",
-    "Automation",
+    "3D Websites",
     "WebGL Experience",
-    "Marketing",
+    "AI SaaS Development",
+    "AI Micro SaaS",
+    "Custom Software",
+    "Performance Marketing",
+    "AI Automation",
+    "Custom Workflows",
     "Other",
   ];
 
@@ -67,17 +71,17 @@ export default function Contact() {
     switch (currentStep) {
       case 0:
         return (
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <span className="font-mono text-[9px] uppercase tracking-widest opacity-45">
               Select Project Category
             </span>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5 max-h-[35vh] overflow-y-auto pr-1">
               {projectTypes.map((type) => (
                 <button
                   key={type}
                   type="button"
                   onClick={() => handleSelectOption("projectType", type)}
-                  className={`py-4 px-5 rounded-xl border text-left text-xs font-mono tracking-wider uppercase transition-all duration-300 ${
+                  className={`py-3 px-4 rounded-xl border text-left text-[11px] font-mono tracking-wider uppercase transition-all duration-300 ${
                     formData.projectType === type
                       ? "border-[#3da58a] bg-[#3da58a]/5 text-[#eae5c9]"
                       : "border-white/5 bg-white/[0.01] hover:border-white/20 hover:bg-white/[0.02] text-[#eae5c9]/65 hover:text-[#eae5c9]"
@@ -189,6 +193,13 @@ export default function Contact() {
                 placeholder="Name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full bg-[#050507]/40 border border-white/5 hover:border-white/10 focus:border-[#3da58a]/40 focus:outline-none transition-colors duration-300 rounded-xl px-4 py-3.5 text-xs font-mono text-[#eae5c9] placeholder-[#eae5c9]/20"
+              />
+              <input
+                type="text"
+                placeholder="Company / Organization (Optional)"
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                 className="w-full bg-[#050507]/40 border border-white/5 hover:border-white/10 focus:border-[#3da58a]/40 focus:outline-none transition-colors duration-300 rounded-xl px-4 py-3.5 text-xs font-mono text-[#eae5c9] placeholder-[#eae5c9]/20"
               />
               <input
