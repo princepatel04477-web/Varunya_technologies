@@ -25,9 +25,7 @@ const cardData = [
     title: "FUELED BY OBSESSION",
     desc: "This isn't a job to us. We lose sleep over pixel gaps and latency budgets because your product reflects our name too."
   }
-];
-
-export default function WhyChooseUs() {
+];export default function WhyChooseUs() {
   const containerRef = useRef<HTMLDivElement>(null);
   const turbulenceRef = useRef<SVGFETurbulenceElement>(null);
   const displacementRef = useRef<SVGFEDisplacementMapElement>(null);
@@ -35,27 +33,49 @@ export default function WhyChooseUs() {
   const { isMobile } = useMotionConfig();
   const [cardsRevealed, setCardsRevealed] = useState(false);
 
+  // Desktop scroll progress (when section is pinned)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
+  // Mobile scroll progress (as section scrolls naturally through viewport)
+  const { scrollYProgress: elementScrollProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const activeProgress = isMobile ? elementScrollProgress : scrollYProgress;
+
   // Marquee Horizontal Translate
   const marqueeX = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  // Star scale morph (0.3 to 1)
+  const marqueeXMobile = useTransform(elementScrollProgress, [0, 1], ["10%", "-50%"]);
+  const activeMarqueeX = isMobile ? marqueeXMobile : marqueeX;
+
+  // Star scale morph
   const starScale = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
-  // Hero Text Parallax Translate Y (-40px)
+  const starScaleMobile = useTransform(elementScrollProgress, [0, 1], [0.5, 1.2]);
+  const activeStarScale = isMobile ? starScaleMobile : starScale;
+
+  // Hero Text Parallax Translate Y
   const heroY = useTransform(scrollYProgress, [0, 1], ["0px", "-40px"]);
+  const heroYMobile = useTransform(elementScrollProgress, [0, 1], ["20px", "-20px"]);
+  const activeHeroY = isMobile ? heroYMobile : heroY;
+
   // Body Opacity Fade-in
   const bodyOpacity = useTransform(scrollYProgress, [0.05, 0.25], [0, 0.8]);
+  const bodyOpacityMobile = useTransform(elementScrollProgress, [0.1, 0.35], [0, 0.8]);
+  const activeBodyOpacity = isMobile ? bodyOpacityMobile : bodyOpacity;
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      // Trigger card reveal when scrolling enters the bottom half
-      if (latest > 0.45) {
-        setCardsRevealed(true);
-      } else {
-        setCardsRevealed(false);
+    const unsubscribe = activeProgress.on("change", (latest) => {
+      // Trigger card reveal when scrolling enters the bottom half (only on desktop)
+      if (!isMobile) {
+        if (latest > 0.45) {
+          setCardsRevealed(true);
+        } else {
+          setCardsRevealed(false);
+        }
       }
 
       // Animate SVG distortion filter attributes directly for 60fps performance
@@ -70,7 +90,7 @@ export default function WhyChooseUs() {
     });
 
     return () => unsubscribe();
-  }, [scrollYProgress]);
+  }, [activeProgress, isMobile]);
 
   const marqueeRepeats = Array(5).fill("WHY VARUNYA");
 
@@ -136,7 +156,7 @@ export default function WhyChooseUs() {
            ========================================== */}
         <div className="w-full bg-black py-4 border-y border-white/5 relative z-10 overflow-hidden select-none">
           <motion.div 
-            style={{ x: isMobile ? "0%" : marqueeX }}
+            style={{ x: activeMarqueeX }}
             className="flex items-center whitespace-nowrap gap-12 text-[100px] sm:text-[140px] md:text-[170px] font-black uppercase text-white tracking-tighter leading-none"
           >
             {marqueeRepeats.map((text, idx) => (
@@ -145,7 +165,7 @@ export default function WhyChooseUs() {
                   {text}
                 </span>
                 <motion.svg
-                  style={{ scale: isMobile ? 0.75 : starScale }}
+                  style={{ scale: activeStarScale }}
                   viewBox="0 0 24 24"
                   className="w-16 h-16 md:w-20 md:h-20 text-white fill-current flex-shrink-0"
                 >
@@ -166,7 +186,7 @@ export default function WhyChooseUs() {
           
           <motion.h2 
             style={{ 
-              y: isMobile ? 0 : heroY,
+              y: activeHeroY,
               fontFamily: "var(--font-editorial), 'PP Editorial New', serif"
             }}
             className="text-4xl sm:text-5xl md:text-[56px] text-white leading-[1.1] tracking-tight font-normal"
@@ -176,7 +196,7 @@ export default function WhyChooseUs() {
           </motion.h2>
 
           <motion.p 
-            style={{ opacity: isMobile ? 0.8 : bodyOpacity }}
+            style={{ opacity: activeBodyOpacity }}
             className="text-[11px] sm:text-[13px] uppercase tracking-[0.15em] leading-relaxed max-w-[420px] mx-auto text-white/80 font-sans"
           >
             We translate high-level digital concepts into high-speed, scalable software systems built with mathematical precision.
@@ -192,10 +212,12 @@ export default function WhyChooseUs() {
               <motion.div
                 key={idx}
                 initial={{ y: 80, opacity: 0 }}
-                animate={{ 
-                  y: (isMobile || cardsRevealed) ? 0 : 120, 
-                  opacity: (isMobile || cardsRevealed) ? 1 : 0 
+                animate={isMobile ? undefined : { 
+                  y: cardsRevealed ? 0 : 120, 
+                  opacity: cardsRevealed ? 1 : 0 
                 }}
+                whileInView={isMobile ? { y: 0, opacity: 1 } : undefined}
+                viewport={isMobile ? { once: true, amount: 0.15 } : undefined}
                 transition={{ 
                   type: "spring", 
                   damping: 28, 
@@ -217,7 +239,6 @@ export default function WhyChooseUs() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );
