@@ -1,114 +1,204 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useMotionConfig } from "@/context/MotionConfigContext";
 
-const cardData = [
+const statements = [
   {
-    num: "(01)",
-    title: "AI-FIRST DEVELOPMENT",
-    desc: "We don't bolt on AI after the fact. Every system we build is designed from the architecture layer up for intelligent behavior."
+    index: "01",
+    heading: "We Build For",
+    headingAccent: "Business Outcomes.",
+    tagline: "Our engineering is driven by metrics, not templates."
   },
   {
-    num: "(02)",
-    title: "ZERO BLOAT, MAXIMUM SPEED",
-    desc: "No vendor lock-in, no template drag. We write lean, production-grade code that scales without carrying dead weight."
+    index: "02",
+    heading: "Not Templates.",
+    headingAccent: "Digital Experiences.",
+    tagline: "Custom architecture designed to capture attention and build trust."
   },
   {
-    num: "(03)",
-    title: "DESIGN THAT CONVERTS",
-    desc: "Our UI/UX isn't decoration — it's engineered to reduce drop-off, increase trust, and drive your specific business outcome."
+    index: "03",
+    heading: "Performance First.",
+    headingAccent: "Animations Second.",
+    tagline: "We deliver liquid-smooth fluid motion without sacrificing speed."
   },
   {
-    num: "(04)",
-    title: "FUELED BY OBSESSION",
-    desc: "This isn't a job to us. We lose sleep over pixel gaps and latency budgets because your product reflects our name too."
+    index: "04",
+    heading: "Built To Scale.",
+    headingAccent: "Built To Last.",
+    tagline: "Lean codebases constructed with mathematical, long-term precision."
+  },
+  {
+    index: "05",
+    heading: "Design That",
+    headingAccent: "Converts.",
+    tagline: "Visual narratives engineered to optimize user flow and drive actions."
   }
-];export default function WhyChooseUs() {
+];
+
+export default function WhyChooseUs() {
   const containerRef = useRef<HTMLDivElement>(null);
   const turbulenceRef = useRef<SVGFETurbulenceElement>(null);
   const displacementRef = useRef<SVGFEDisplacementMapElement>(null);
 
   const { isMobile } = useMotionConfig();
-  const [cardsRevealed, setCardsRevealed] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // Desktop scroll progress (when section is pinned)
+  // Scroll tracking across the 400vh section height
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Mobile scroll progress (as section scrolls naturally through viewport)
-  const { scrollYProgress: elementScrollProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
+  // Mouse coordinate interpolation values
+  const targetMouse = useRef({ x: 0, y: 0 });
+  const currentMouse = useRef({ x: 0, y: 0 });
+  const mouseXVal = useMotionValue(0);
+  const mouseYVal = useMotionValue(0);
 
-  const activeProgress = isMobile ? elementScrollProgress : scrollYProgress;
-
-  // Marquee Horizontal Translate
-  const marqueeX = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const marqueeXMobile = useTransform(elementScrollProgress, [0, 1], ["10%", "-50%"]);
-  const activeMarqueeX = isMobile ? marqueeXMobile : marqueeX;
-
-  // Star scale morph
-  const starScale = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
-  const starScaleMobile = useTransform(elementScrollProgress, [0, 1], [0.5, 1.2]);
-  const activeStarScale = isMobile ? starScaleMobile : starScale;
-
-  // Hero Text Parallax Translate Y
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0px", "-40px"]);
-  const heroYMobile = useTransform(elementScrollProgress, [0, 1], ["20px", "-20px"]);
-  const activeHeroY = isMobile ? heroYMobile : heroY;
-
-  // Body Opacity Fade-in
-  const bodyOpacity = useTransform(scrollYProgress, [0.05, 0.25], [0, 0.8]);
-  const bodyOpacityMobile = useTransform(elementScrollProgress, [0.1, 0.35], [0, 0.8]);
-  const activeBodyOpacity = isMobile ? bodyOpacityMobile : bodyOpacity;
-
+  // Listen to mouse movement and map to normalized viewport offsets
   useEffect(() => {
-    const unsubscribe = activeProgress.on("change", (latest) => {
-      // Trigger card reveal when scrolling enters the bottom half (only on desktop)
-      if (!isMobile) {
-        if (latest > 0.45) {
-          setCardsRevealed(true);
-        } else {
-          setCardsRevealed(false);
-        }
-      }
+    const handleMouseMove = (e: MouseEvent) => {
+      targetMouse.current = {
+        x: (e.clientX / window.innerWidth) - 0.5,
+        y: (e.clientY / window.innerHeight) - 0.5
+      };
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
-      // Animate SVG distortion filter attributes directly for 60fps performance
+  // Update active index based on scroll progress
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      let idx = 0;
+      if (latest < 0.22) idx = 0;
+      else if (latest < 0.42) idx = 1;
+      else if (latest < 0.62) idx = 2;
+      else if (latest < 0.82) idx = 3;
+      else idx = 4;
+      setActiveIndex(idx);
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress]);
+
+  // Direct DOM manipulation of SVG filter attributes in a requestAnimationFrame loop
+  // This combines scroll progress and mouse coordinates with lerp interpolation for 60fps performance
+  useEffect(() => {
+    let animationFrameId: number;
+
+    const updateFilter = () => {
+      // Lerp mouse coordinates
+      currentMouse.current.x += (targetMouse.current.x - currentMouse.current.x) * 0.08;
+      currentMouse.current.y += (targetMouse.current.y - currentMouse.current.y) * 0.08;
+
+      // Update Framer Motion values for mouse position
+      mouseXVal.set(currentMouse.current.x * 25); // max 25px offset
+      mouseYVal.set(currentMouse.current.y * 25);
+
+      const latestScroll = scrollYProgress.get();
+
       if (turbulenceRef.current) {
-        const freq = 0.01 + latest * 0.035;
+        // baseFrequency moves organic-style based on scroll progress and mouse coordinates
+        const freq = 0.015 + latestScroll * 0.025 + Math.abs(currentMouse.current.x) * 0.005;
         turbulenceRef.current.setAttribute("baseFrequency", freq.toString());
       }
+
       if (displacementRef.current) {
-        const scaleVal = latest * 60;
+        // scale intensifies at higher scroll progress and during rapid mouse movements
+        const scaleVal = latestScroll * 60 + (Math.abs(currentMouse.current.x) + Math.abs(currentMouse.current.y)) * 40;
         displacementRef.current.setAttribute("scale", scaleVal.toString());
       }
-    });
 
-    return () => unsubscribe();
-  }, [activeProgress, isMobile]);
+      animationFrameId = requestAnimationFrame(updateFilter);
+    };
 
-  const marqueeRepeats = Array(5).fill("WHY VARUNYA");
+    animationFrameId = requestAnimationFrame(updateFilter);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [scrollYProgress, mouseXVal, mouseYVal]);
+
+  // Layer 1 — Giant Parallax Background Typography
+  const whyY = useTransform(scrollYProgress, [0, 1], ["-5vh", "-35vh"]);
+  const whyX = useTransform(scrollYProgress, [0, 1], ["-5vw", "10vw"]);
+
+  const varunyaY = useTransform(scrollYProgress, [0, 1], ["15vh", "45vh"]);
+  const varunyaX = useTransform(scrollYProgress, [0, 1], ["8vw", "-12vw"]);
+
+  const techY = useTransform(scrollYProgress, [0, 1], ["-10vh", "-40vh"]);
+  const techX = useTransform(scrollYProgress, [0, 1], ["0vw", "18vw"]);
+
+  const mouseParallaxX = useTransform(mouseXVal, (val) => `${val}px`);
+  const mouseParallaxY = useTransform(mouseYVal, (val) => `${val}px`);
+
+  // Layer 3 — Statement Scroll Mappings (hardcoded precision arrays)
+  // Statement 0 (Center at 0.1)
+  const op0 = useTransform(scrollYProgress, [0.0, 0.0, 0.15, 0.22], [1, 1, 1, 0]);
+  const y0 = useTransform(scrollYProgress, [0.0, 0.0, 0.15, 0.22], ["0px", "0px", "0px", "-50px"]);
+
+  // Statement 1 (Center at 0.3)
+  const op1 = useTransform(scrollYProgress, [0.15, 0.22, 0.38, 0.42], [0, 1, 1, 0]);
+  const y1 = useTransform(scrollYProgress, [0.15, 0.22, 0.38, 0.42], ["50px", "0px", "0px", "-50px"]);
+
+  // Statement 2 (Center at 0.5)
+  const op2 = useTransform(scrollYProgress, [0.38, 0.42, 0.58, 0.62], [0, 1, 1, 0]);
+  const y2 = useTransform(scrollYProgress, [0.38, 0.42, 0.58, 0.62], ["50px", "0px", "0px", "-50px"]);
+
+  // Statement 3 (Center at 0.7)
+  const op3 = useTransform(scrollYProgress, [0.58, 0.62, 0.78, 0.82], [0, 1, 1, 0]);
+  const y3 = useTransform(scrollYProgress, [0.58, 0.62, 0.78, 0.82], ["50px", "0px", "0px", "-50px"]);
+
+  // Statement 4 (Center at 0.9)
+  const op4 = useTransform(scrollYProgress, [0.78, 0.82, 1.0, 1.0], [0, 1, 1, 1]);
+  const y4 = useTransform(scrollYProgress, [0.78, 0.82, 1.0, 1.0], ["50px", "0px", "0px", "0px"]);
+
+  const statementStyles = [
+    { opacity: op0, y: y0 },
+    { opacity: op1, y: y1 },
+    { opacity: op2, y: y2 },
+    { opacity: op3, y: y3 },
+    { opacity: op4, y: y4 }
+  ];
 
   return (
     <section 
       ref={containerRef}
       className="relative w-full bg-[#050505] z-20 select-none overflow-visible"
-      style={{ minHeight: isMobile ? "auto" : "300vh" }}
+      style={{ minHeight: "400vh" }}
     >
-      {/* SVG Displacement Filter */}
+      {/* Styles for the animated gradient background blobs */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes float-blob-1 {
+          0% { transform: translate(-10%, -10%) scale(1); }
+          50% { transform: translate(15%, 12%) scale(1.2); }
+          100% { transform: translate(-10%, -10%) scale(1); }
+        }
+        @keyframes float-blob-2 {
+          0% { transform: translate(8%, 15%) scale(1.1); }
+          50% { transform: translate(-12%, -10%) scale(0.9); }
+          100% { transform: translate(8%, 15%) scale(1.1); }
+        }
+        @keyframes float-blob-3 {
+          0% { transform: translate(-12%, 8%) scale(0.9); }
+          50% { transform: translate(12%, -12%) scale(1.15); }
+          100% { transform: translate(-12%, 8%) scale(0.9); }
+        }
+        @keyframes float-blob-4 {
+          0% { transform: translate(12%, -12%) scale(1.2); }
+          50% { transform: translate(-8%, 12%) scale(0.85); }
+          100% { transform: translate(12%, -12%) scale(1.2); }
+        }
+      `}} />
+
+      {/* SVG Distortion Filter definitions */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
-          <filter id="distortionFilter">
+          <filter id="liquidFilter">
             <feTurbulence
               ref={turbulenceRef}
               type="fractalNoise"
-              baseFrequency="0.01"
-              numOctaves="1"
+              baseFrequency="0.015"
+              numOctaves="2"
               result="noise"
             />
             <feDisplacementMap
@@ -119,21 +209,36 @@ const cardData = [
               xChannelSelector="R"
               yChannelSelector="G"
             />
+            <feColorMatrix
+              type="matrix"
+              values="
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 18 -7
+              "
+            />
           </filter>
         </defs>
       </svg>
 
-      {/* Sticky full-screen view container */}
-      <div className="relative md:sticky md:top-0 h-auto md:h-screen w-full overflow-visible md:overflow-hidden flex flex-col justify-between py-12 md:py-16">
+      {/* Pinned main view container */}
+      <div className="sticky top-0 h-screen min-h-[100dvh] w-full overflow-hidden flex flex-col justify-center items-center">
         
         {/* ==========================================
-            LAYER 2 — Background Distortion Video/Image
+            LAYER 2 — Liquid Distortion Background Mesh
            ========================================== */}
         <div 
-          className="absolute inset-0 z-0 bg-[#050505] pointer-events-none"
-          style={{ filter: "url(#distortionFilter)" }}
+          className="absolute inset-0 z-0 bg-[#050505] pointer-events-none overflow-hidden"
+          style={{ filter: "url(#liquidFilter)" }}
         >
-          {/* Subtle noise grid texture */}
+          {/* Animated gradient mesh blobs */}
+          <div className="absolute -top-1/4 -left-1/4 w-[75vw] h-[75vw] rounded-full bg-[#E02020]/8 blur-[90px] pointer-events-none" style={{ animation: "float-blob-1 22s infinite ease-in-out" }} />
+          <div className="absolute -bottom-1/4 -right-1/4 w-[65vw] h-[65vw] rounded-full bg-[#eae5c9]/5 blur-[100px] pointer-events-none" style={{ animation: "float-blob-2 28s infinite ease-in-out" }} />
+          <div className="absolute top-1/4 right-1/4 w-[55vw] h-[55vw] rounded-full bg-[#0a1b3a]/20 blur-[80px] pointer-events-none" style={{ animation: "float-blob-3 18s infinite ease-in-out" }} />
+          <div className="absolute bottom-1/4 left-1/4 w-[60vw] h-[60vw] rounded-full bg-[#200025]/12 blur-[110px] pointer-events-none" style={{ animation: "float-blob-4 25s infinite ease-in-out" }} />
+
+          {/* Subtle noise texturing */}
           <div 
             className="absolute inset-0 opacity-[0.03] pointer-events-none"
             style={{
@@ -141,104 +246,83 @@ const cardData = [
                 linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
               `,
-              backgroundSize: "45px 45px",
+              backgroundSize: "50px 50px",
             }}
           />
-          {/* Ambient center gradients */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_75%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(224,32,32,0.04)_0%,transparent_60%)]" />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
 
         {/* ==========================================
-            LAYER 1 — Sticky Horizontal Marquee Header
+            LAYER 1 — Giant Background Typography (Parallax)
            ========================================== */}
-        <div className="w-full bg-black py-4 border-y border-white/5 relative z-10 overflow-hidden select-none">
+        <motion.div 
+          style={{ x: mouseParallaxX, y: mouseParallaxY }}
+          className="absolute inset-0 z-10 pointer-events-none select-none flex flex-col justify-between p-12 overflow-hidden"
+        >
+          {/* WHY */}
           <motion.div 
-            style={{ x: activeMarqueeX }}
-            className="flex items-center whitespace-nowrap gap-12 text-[100px] sm:text-[140px] md:text-[170px] font-black uppercase text-white tracking-tighter leading-none"
+            style={{ x: whyX, y: whyY, fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
+            className="absolute top-[18%] left-[5%] text-[14vw] sm:text-[16vw] font-black uppercase text-white/5 tracking-tighter leading-none whitespace-nowrap"
           >
-            {marqueeRepeats.map((text, idx) => (
-              <div key={idx} className="flex items-center gap-12">
-                <span style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif", fontWeight: 900 }}>
-                  {text}
-                </span>
-                <motion.svg
-                  style={{ scale: activeStarScale }}
-                  viewBox="0 0 24 24"
-                  className="w-16 h-16 md:w-20 md:h-20 text-white fill-current flex-shrink-0"
-                >
-                  <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" />
-                </motion.svg>
-              </div>
-            ))}
+            WHY
           </motion.div>
-        </div>
+
+          {/* VARUNYA */}
+          <motion.div 
+            style={{ x: varunyaX, y: varunyaY, fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
+            className="absolute top-[43%] left-[10%] text-[14vw] sm:text-[16vw] font-black uppercase text-white/5 tracking-tighter leading-none whitespace-nowrap"
+          >
+            VARUNYA
+          </motion.div>
+
+          {/* TECH */}
+          <motion.div 
+            style={{ x: techX, y: techY, fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
+            className="absolute top-[68%] right-[8%] text-[14vw] sm:text-[16vw] font-black uppercase text-white/5 tracking-tighter leading-none whitespace-nowrap"
+          >
+            TECH
+          </motion.div>
+        </motion.div>
 
         {/* ==========================================
-            LAYER 3 — Centered Content (Pinned)
+            LAYER 3 — Center Pinned Content Sequence
            ========================================== */}
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-center mt-12 md:mt-8 flex-1 flex flex-col justify-center gap-4">
-          <span className="font-mono text-[9px] sm:text-[11px] uppercase tracking-[0.3em] text-white opacity-70">
-            LIFE WITHIN THE WORK / JUST BUILD IT.
-          </span>
-          
-          <motion.h2 
-            style={{ 
-              y: activeHeroY,
-              fontFamily: "var(--font-editorial), 'PP Editorial New', serif"
-            }}
-            className="text-4xl sm:text-5xl md:text-[56px] text-white leading-[1.1] tracking-tight font-normal"
-          >
-            Extraordinary Results<br />
-            <span className="italic text-[#eae5c9]">That Feel Like Home.</span>
-          </motion.h2>
-
-          <motion.p 
-            style={{ opacity: activeBodyOpacity }}
-            className="text-[11px] sm:text-[13px] uppercase tracking-[0.15em] leading-relaxed max-w-[420px] mx-auto text-white/80 font-sans"
-          >
-            We translate high-level digital concepts into high-speed, scalable software systems built with mathematical precision.
-          </motion.p>
-        </div>
-
-        {/* ==========================================
-            LAYER 4 — 2×2 Feature Cards (Scroll-Revealed)
-           ========================================== */}
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 mt-12 md:mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
-            {cardData.map((card, idx) => (
+        <div className="relative z-20 w-full max-w-4xl h-full flex items-center justify-center px-6 pointer-events-none">
+          {statements.map((statement, idx) => {
+            const { opacity, y } = statementStyles[idx];
+            return (
               <motion.div
                 key={idx}
-                initial={{ y: 80, opacity: 0 }}
-                animate={isMobile ? undefined : { 
-                  y: cardsRevealed ? 0 : 120, 
-                  opacity: cardsRevealed ? 1 : 0 
+                style={{ 
+                  opacity, 
+                  y,
+                  pointerEvents: activeIndex === idx ? "auto" : "none"
                 }}
-                whileInView={isMobile ? { y: 0, opacity: 1 } : undefined}
-                viewport={isMobile ? { once: true, amount: 0.15 } : undefined}
-                transition={{ 
-                  type: "spring", 
-                  damping: 28, 
-                  stiffness: 110, 
-                  delay: isMobile ? idx * 0.05 : idx * 0.1 
-                }}
-                className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-6 w-full bg-white text-black p-5 rounded-xl border-b-4 border-transparent hover:border-[#E02020] transition-all duration-300 group shadow-2xl"
+                className="absolute inset-0 flex flex-col justify-center items-center text-center max-w-2xl mx-auto px-6"
               >
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-[11px] text-black/40">{card.num}</span>
-                  <h4 className="font-sans font-extrabold text-[12.5px] uppercase tracking-wider text-black group-hover:text-[#E02020] transition-colors duration-300">
-                    {card.title}
-                  </h4>
-                </div>
-                <p className="font-sans text-[10px] uppercase tracking-wider leading-relaxed text-black/70 max-w-[260px] text-left sm:text-right ml-0 sm:ml-auto">
-                  {card.desc}
+                {/* Index Number */}
+                <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.3em] text-[#E02020] mb-4">
+                  {statement.index}
+                </span>
+                
+                {/* Heading */}
+                <h2 
+                  className="text-4xl sm:text-5xl md:text-6xl text-white font-black leading-[1.15] tracking-tight mb-6"
+                  style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
+                >
+                  {statement.heading} <br className="hidden sm:inline" />
+                  <span className="italic text-[#eae5c9] font-normal">{statement.headingAccent}</span>
+                </h2>
+                
+                {/* Tagline */}
+                <p className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.2em] leading-relaxed max-w-md text-white/70">
+                  {statement.tagline}
                 </p>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );
