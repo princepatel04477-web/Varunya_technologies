@@ -144,7 +144,7 @@ export default function ExperienceLab({ stepBody }: ExperienceLabProps) {
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas

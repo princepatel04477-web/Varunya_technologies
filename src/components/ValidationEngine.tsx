@@ -160,7 +160,7 @@ export default function ValidationEngine({ stepBody }: ValidationEngineProps) {
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas
@@ -314,7 +314,7 @@ export default function ValidationEngine({ stepBody }: ValidationEngineProps) {
         imperfection.burstOpacity -= 1.8 * delta;
 
         ctx.beginPath();
-        ctx.arc(rx + imperfection.relX, ry + imperfection.relY, imperfection.burstRadius, 0, Math.PI * 2);
+        ctx.arc(rx + imperfection.relX, ry + imperfection.relY, Math.max(0, imperfection.burstRadius), 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(61, 165, 138, ${Math.max(0, imperfection.burstOpacity).toFixed(3)})`;
         ctx.lineWidth = 0.55;
         ctx.stroke();

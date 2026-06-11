@@ -143,7 +143,7 @@ export default function StrategyBlueprint({ stepBody }: StrategyBlueprintProps) 
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas
@@ -372,7 +372,7 @@ export default function StrategyBlueprint({ stepBody }: StrategyBlueprintProps) 
       const syncOp = (1.0 - syncProgress) * (isHovered ? 0.18 : 0.08);
 
       ctx.beginPath();
-      ctx.arc(nodePositions[4].x, nodePositions[4].y, syncR, 0, Math.PI * 2);
+      ctx.arc(nodePositions[4].x, nodePositions[4].y, Math.max(0, syncR), 0, Math.PI * 2);
       ctx.strokeStyle = `rgba(234, 229, 201, ${syncOp.toFixed(3)})`;
       ctx.lineWidth = 0.5;
       ctx.stroke();

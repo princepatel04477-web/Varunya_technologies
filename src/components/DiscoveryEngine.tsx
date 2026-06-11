@@ -121,7 +121,7 @@ export default function DiscoveryEngine({ stepBody }: DiscoveryEngineProps) {
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas
@@ -199,7 +199,7 @@ export default function DiscoveryEngine({ stepBody }: DiscoveryEngineProps) {
         w.opacity = (1.0 - progress) * waveBaseOp;
 
         ctx.beginPath();
-        ctx.arc(rx, ry, w.radius, 0, Math.PI * 2);
+        ctx.arc(rx, ry, Math.max(0, w.radius), 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(234, 229, 201, ${w.opacity.toFixed(3)})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();

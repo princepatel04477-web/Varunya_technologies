@@ -174,7 +174,7 @@ export default function ApplicationAssembly({ stepBody }: ApplicationAssemblyPro
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas
@@ -533,7 +533,7 @@ export default function ApplicationAssembly({ stepBody }: ApplicationAssemblyPro
         if (dynamicModule.constructionProgress > 0.4) {
           const ringProgress = (evoTime * 0.6) % 1.0;
           ctx.beginPath();
-          ctx.arc(ex + dynamicModule.w / 2, ey + dynamicModule.h / 2, 8 + ringProgress * 15, 0, Math.PI * 2);
+          ctx.arc(ex + dynamicModule.w / 2, ey + dynamicModule.h / 2, Math.max(0, 8 + ringProgress * 15), 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(61, 165, 138, ${(0.16 * (1.0 - ringProgress) * dynamicModule.opacity * 2).toFixed(3)})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();

@@ -188,7 +188,7 @@ export default function GlobalExpansion({ stepBody }: GlobalExpansionProps) {
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas
@@ -291,7 +291,7 @@ export default function GlobalExpansion({ stepBody }: GlobalExpansionProps) {
           const finalOpacity = (1.0 - progress) * (isHovered ? 0.095 : 0.045);
 
           ctx.beginPath();
-          ctx.arc(wx, wy, ring.radius, 0, Math.PI * 2);
+          ctx.arc(wx, wy, Math.max(0, ring.radius), 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(234, 229, 201, ${finalOpacity.toFixed(3)})`;
           ctx.lineWidth = 0.55;
           ctx.stroke();
@@ -500,7 +500,7 @@ export default function GlobalExpansion({ stepBody }: GlobalExpansionProps) {
         // Draw connection signal pulse wave
         if (dynamicEndpoint.pulseOpacity > 0.01) {
           ctx.beginPath();
-          ctx.arc(dx, dy, dynamicEndpoint.pulseRadius, 0, Math.PI * 2);
+          ctx.arc(dx, dy, Math.max(0, dynamicEndpoint.pulseRadius), 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(61, 165, 138, ${dynamicEndpoint.pulseOpacity.toFixed(3)})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();

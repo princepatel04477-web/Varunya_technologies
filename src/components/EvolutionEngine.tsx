@@ -176,7 +176,7 @@ export default function EvolutionEngine({ stepBody }: EvolutionEngineProps) {
 
     // Render loop
     const animate = (now: number) => {
-      const delta = (now - lastTime) / 1000;
+      const delta = Math.max(0, Math.min(0.1, (now - lastTime) / 1000));
       lastTime = now;
 
       // Clear canvas
@@ -333,7 +333,7 @@ export default function EvolutionEngine({ stepBody }: EvolutionEngineProps) {
       // Draw dynamic node integration burst wave
       if (dynamicNode.burstOpacity > 0.01) {
         ctx.beginPath();
-        ctx.arc(coreX, coreY, dynamicNode.burstRadius, 0, Math.PI * 2);
+        ctx.arc(coreX, coreY, Math.max(0, dynamicNode.burstRadius), 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(61, 165, 138, ${Math.max(0, dynamicNode.burstOpacity).toFixed(3)})`;
         ctx.lineWidth = 0.55;
         ctx.stroke();
