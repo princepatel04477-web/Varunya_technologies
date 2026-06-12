@@ -112,7 +112,7 @@ export default function Hero({ onEnterExhibition, loaderFinished = true }: HeroP
             className="flex flex-col items-start gap-6"
           >
             <p className="text-muted text-base md:text-lg max-w-lg leading-relaxed font-light tracking-wide">
-              We design and engineer high-end digital products, spatial web architectures, and advanced AI systems — where high-concept editorial art meets uncompromising code.
+              Varunya Technologies is a premium web development company and software company in Surat. We design and engineer high-end mobile app development solutions, custom software, and advanced AI systems where art meets uncompromising code.
             </p>
             <AnimatedLayerButton
               onClick={onEnterExhibition}
