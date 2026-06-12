@@ -1,26 +1,23 @@
 import type { Metadata } from "next";
-import HomeClient from "./HomeClient";
+import ServicePageTemplate from "@/components/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Web Development Company in Surat | Varunya Technologies",
-  description: "Varunya Technologies is a premier web development company in Surat, Gujarat. We build high-end websites, mobile apps, custom software, UI/UX designs, and AI solutions. Serving Adajan, Vesu, Pal, Katargam, Varachha, Bhatar, and globally.",
+  title: "Software Development Company in Surat | Varunya Technologies",
+  description: "Are you searching for a reliable software company in Surat? Varunya Technologies architects custom software, REST/gRPC API structures, and cloud solutions designed for speed and security. Serving Adajan, Vesu, and globally.",
   keywords: [
-    "web development company in surat",
-    "website development company surat",
     "software company in surat",
-    "mobile app development company surat",
-    "UI UX design company surat",
-    "AI development company Surat",
-    "Varunya Technologies Surat",
-    "web developers in Surat",
-    "software development in Surat"
+    "software development company surat",
+    "custom software development Surat",
+    "IT company in Surat",
+    "enterprise software development Surat",
+    "Varunya Technologies software"
   ],
   alternates: {
-    canonical: "https://varunyatechnologies.com"
+    canonical: "https://varunyatechnologies.com/software-development-company-surat"
   }
 };
 
-export default function Page() {
+export default function SoftwarePage() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -54,20 +51,7 @@ export default function Page() {
       { "@type": "AdministrativeArea", "name": "Althan" },
       { "@type": "AdministrativeArea", "name": "Piplod" },
       { "@type": "AdministrativeArea", "name": "Surat" }
-    ],
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "opens": "09:00",
-      "closes": "19:00"
-    }
+    ]
   };
 
   const faqSchema = {
@@ -117,6 +101,52 @@ export default function Page() {
     ]
   };
 
+  const features = [
+    {
+      title: "Bespoke System Architecture",
+      desc: "Robust, scalable software platforms tailored for complex enterprise processes and high-throughput workflows."
+    },
+    {
+      title: "High-Performance API Layers",
+      desc: "Secure, low-latency REST and gRPC API layers designed to connect services seamlessly under high traffic."
+    },
+    {
+      title: "Cloud Infrastructure Setup",
+      desc: "Reliable AWS/GCP server deployments configured with CI/CD automation pipelines, zero-downtime, and high availability."
+    },
+    {
+      title: "Enterprise Security Integrations",
+      desc: "Top-tier database security protocols, OAuth authentication, and regulatory compliance standards built natively."
+    }
+  ];
+
+  const techStack = [
+    "Node.js", "TypeScript", "Python", "Go", "PostgreSQL", "MongoDB", "AWS", "Docker", "gRPC", "Next.js"
+  ];
+
+  const faqs = [
+    {
+      q: "Why choose a web development company in Surat?",
+      a: "Choosing a local web development company in Surat like Varunya Technologies allows for direct collaboration, timezone alignment, and local market insight, while delivering international-grade spatial design and robust software systems."
+    },
+    {
+      q: "How much does website development cost in Surat?",
+      a: "The cost of website development in Surat varies based on complexity, ranging from budget-friendly informational websites to premium custom 3D web experiences, bespoke software solutions, and advanced AI agent architectures tailored to business needs."
+    },
+    {
+      q: "How long does it take to develop a website?",
+      a: "A standard Next.js website takes 2-4 weeks, while complex 3D experiences, custom software dashboards, or enterprise agentic AI systems can take 1-3 months of focused design and engineering."
+    },
+    {
+      q: "Do you provide mobile app development services in Surat?",
+      a: "Yes, Varunya Technologies provides high-performance native and cross-platform mobile app development services in Surat using React Native and Flutter, tailored to users across major hubs like Adajan, Vesu, and Piplod."
+    },
+    {
+      q: "Do you work with clients outside Surat?",
+      a: "Absolutely. While we are proud to be a premier software company in Surat, Gujarat, we architect and deploy digital platforms for ambitious clients across India, North America, Europe, and the Middle East."
+    }
+  ];
+
   return (
     <>
       <script
@@ -127,7 +157,17 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <HomeClient />
+      <ServicePageTemplate
+        serviceKey="software"
+        serviceName="Software Development"
+        metaTitle="Software Development Company in Surat | Varunya Technologies"
+        metaDescription="Are you searching for a reliable software company in Surat? Varunya Technologies architects custom software, REST/gRPC API structures, and cloud solutions designed for speed and security. Serving Adajan, Vesu, and globally."
+        heroHeadline="Software Development Company in Surat"
+        introText="We build custom digital architectures that solve complex operational bottlenecks. Rigorous system design, clean databases, and zero-bloat code designed to help your enterprise grow."
+        features={features}
+        techStack={techStack}
+        faqs={faqs}
+      />
     </>
   );
 }

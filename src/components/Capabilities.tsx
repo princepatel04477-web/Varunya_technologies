@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useMotionConfig } from "@/context/MotionConfigContext";
+import Link from "next/link";
 
 const GeometryEngine = dynamic(() => import("./GeometryEngine"), {
   ssr: false,
@@ -306,13 +307,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   We design and build gorgeous three-dimensional web spaces that combine physical realism, elegant transitions, and spatial depth, allowing users to interact with your physical products natively in the browser.
                 </p>
+                <Link href="/web-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-red-600 hover:text-red-800 transition-colors duration-300 self-start">
+                  Explore Web Solutions in Surat →
+                </Link>
               </div>
             </div>
 
@@ -362,13 +366,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   Choreographed creative applications powered by custom Fragment and Vertex shaders. We build interactive WebGL storytelling spaces that operate flawlessly on mobile, tablet, and high-DPI desktop environments.
                 </p>
+                <Link href="/web-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#050507] hover:text-[#3da58a] transition-colors duration-300 self-start">
+                  Explore WebGL Graphics in Surat →
+                </Link>
               </div>
             </div>
 
@@ -406,13 +413,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   Robust agentic pipelines engineered for scalable digital products. We develop secure AI SaaS applications complete with semantic vector indexing, postgres embeddings, multi-model orchestrators, and automated agent pools.
                 </p>
+                <Link href="/ai-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#050507] hover:text-[#eae5c9] transition-colors duration-300 self-start">
+                  Explore AI SaaS in Surat →
+                </Link>
               </div>
             </div>
 
@@ -472,13 +482,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   Fast-to-market AI micro-services, secure browser extensions, and niche API applications engineered to solve singular vertical problems with absolute efficiency, minimal overhead, and massive performance.
                 </p>
+                <Link href="/ai-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#050507] hover:text-[#eae5c9] transition-colors duration-300 self-start">
+                  Explore AI Micro SaaS in Surat →
+                </Link>
               </div>
             </div>
 
@@ -538,13 +551,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   High-performance custom software systems designed for reliability and speed. From secure REST/gRPC architectures, low-latency API layers, and secure cloud environments to specialized desktop-and-spatial tools.
                 </p>
+                <Link href="/software-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#050507] hover:text-[#3da58a] transition-colors duration-300 self-start">
+                  Explore Custom Software in Surat →
+                </Link>
               </div>
             </div>
 
@@ -604,13 +620,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   We scale modern digital brands through data-backed performance campaigns, conversion rate optimization (CRO), high-fidelity programmatic landing pages, and advanced search engine optimization (SEO) networks.
                 </p>
+                <Link href="/web-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#eae5c9] hover:text-[#3da58a] transition-colors duration-300 self-start">
+                  Explore Growth Solutions in Surat →
+                </Link>
               </div>
             </div>
 
@@ -670,13 +689,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   We engineer autonomous agents and cognitive systems that automate complex corporate operations, from dynamic content pipelines to self-optimizing database tasks, slashing operational latency.
                 </p>
+                <Link href="/ai-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#050507] hover:text-[#E02020] transition-colors duration-300 self-start">
+                  Explore AI Automation in Surat →
+                </Link>
               </div>
             </div>
 
@@ -736,13 +758,16 @@ export default function Capabilities({ onEnterExhibition }: CapabilitiesProps) {
                 </h4>
               </div>
 
-              <div className="mt-8 md:mt-0 max-w-lg">
+              <div className="mt-8 md:mt-0 max-w-lg flex flex-col gap-4">
                 <p 
                   className="text-xs md:text-sm leading-relaxed opacity-75 font-light"
                   style={{ fontFamily: "var(--font-editorial), 'PP Editorial New', serif" }}
                 >
                   Architecting bespoke digital pathways that connect your legacy databases, modern APIs, and proprietary AI agents. We construct fluid, high-throughput workflows that orchestrate complex systems flawlessly.
                 </p>
+                <Link href="/software-development-company-surat" className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold text-[#eae5c9] hover:text-[#3da58a] transition-colors duration-300 self-start">
+                  Explore Custom Workflows in Surat →
+                </Link>
               </div>
             </div>
 

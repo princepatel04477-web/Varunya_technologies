@@ -20,7 +20,10 @@ export default function Navbar() {
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    // Add small delay to let menu animation finish
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      window.location.href = `/#${id}`;
+      return;
+    }
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {

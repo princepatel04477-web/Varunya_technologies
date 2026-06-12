@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-16">
           {/* Logo & Agency details */}
-          <div className="md:col-span-5 flex flex-col gap-4">
+          <div className="md:col-span-4 flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 overflow-hidden rounded-md border border-white/20 flex items-center justify-center bg-zinc-900">
                 <Image
@@ -26,13 +27,37 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-muted text-xs leading-relaxed font-light max-w-xs mt-2">
-              High-end editorial web experiences, intelligent custom integrations, and clean systems architecture. Designed and engineered for excellence.
+              High-end editorial web experiences, intelligent custom integrations, and clean systems architecture. Designed and engineered for excellence in Surat.
             </p>
           </div>
 
-          {/* Social Links */}
+          {/* Local Services Links */}
           <div className="md:col-span-3 flex flex-col gap-3">
-            <span className="text-[10px] tracking-widest text-white/30 font-semibold uppercase">
+            <span className="text-[10px] tracking-widest text-white/30 font-semibold uppercase font-mono">
+              SOLUTIONS IN SURAT
+            </span>
+            <div className="flex flex-col gap-2">
+              {[
+                { name: "Web Development", path: "/web-development-company-surat" },
+                { name: "Mobile App Development", path: "/mobile-app-development-company-surat" },
+                { name: "UI/UX Design Studio", path: "/ui-ux-design-company-surat" },
+                { name: "Software Development", path: "/software-development-company-surat" },
+                { name: "AI Solutions", path: "/ai-development-company-surat" }
+              ].map((service) => (
+                <Link
+                  key={service.name}
+                  href={service.path}
+                  className="text-xs text-muted hover:text-white transition-colors duration-300 self-start font-mono"
+                >
+                  {service.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Social Links */}
+          <div className="md:col-span-2 flex flex-col gap-3">
+            <span className="text-[10px] tracking-widest text-white/30 font-semibold uppercase font-mono">
               NETWORK
             </span>
             <div className="flex flex-col gap-2">
@@ -56,14 +81,14 @@ export default function Footer() {
           </div>
 
           {/* Office coordinates / location */}
-          <div className="md:col-span-4 flex flex-col gap-3">
-            <span className="text-[10px] tracking-widest text-white/30 font-semibold uppercase">
+          <div className="md:col-span-3 flex flex-col gap-3">
+            <span className="text-[10px] tracking-widest text-white/30 font-semibold uppercase font-mono">
               STUDIO LOCATION
             </span>
             <p className="text-xs text-muted leading-relaxed font-light">
               Varunya Technologies LLC<br />
-              Surat, Gujarat — India<br />
-              <span className="font-mono text-[10px] text-white/40">{"21° 10′ N, 72° 50′ E"}</span>
+              Adajan, Surat, Gujarat — India<br />
+              <span className="font-mono text-[10px] text-white/40">{"21° 11′ N, 72° 47′ E"}</span>
             </p>
           </div>
         </div>
