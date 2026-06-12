@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -21,7 +23,7 @@ export default function Navbar() {
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
     if (typeof window !== "undefined" && window.location.pathname !== "/") {
-      window.location.href = `/#${id}`;
+      router.push(`/#${id}`);
       return;
     }
     setTimeout(() => {

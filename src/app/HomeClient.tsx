@@ -35,7 +35,9 @@ export default function HomeClient() {
 
   useEffect(() => {
     if (typeof window !== "undefined" && sessionStorage.getItem("vt_loader_shown")) {
-      setLoaderFinished(true);
+      setTimeout(() => {
+        setLoaderFinished(true);
+      }, 0);
     }
   }, []);
 

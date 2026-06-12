@@ -287,13 +287,6 @@ export function getSeoPageData(slug: string): ServicePageData | null {
   const city = mapping.city ? citiesConfig[mapping.city] : null;
   if (!service) return null;
 
-  const citySuffix = city ? ` in ${city.name}` : "";
-  const cityMetaSuffix = city ? ` Company in ${city.name}, ${city.region}, India` : " Services";
-  const cityKeywords = city ? [
-    `${service.name.toLowerCase()} company ${city.name.toLowerCase()}`,
-    `${service.name.toLowerCase()} services in ${city.name.toLowerCase()}`,
-    `best ${service.name.toLowerCase()} agency ${city.name.toLowerCase()}`
-  ] : [];
 
   const metaTitle = city 
     ? `${service.headline} in ${city.name} | Varunya Technologies`

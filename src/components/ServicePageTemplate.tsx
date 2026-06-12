@@ -138,7 +138,7 @@ export default function ServicePageTemplate({
                 variants={fadeInUp}
                 className="text-[10px] tracking-[0.45em] text-[#d4af37] font-mono uppercase"
               >
-                LOCAL SOLUTIONS IN SURAT, GUJARAT
+                Premium {serviceName} Solutions
               </motion.span>
               <motion.h1 
                 variants={fadeInUp}
