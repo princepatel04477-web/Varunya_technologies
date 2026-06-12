@@ -3,6 +3,8 @@ import { Syne, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { MotionConfigProvider } from "@/context/MotionConfigContext";
 import NoiseOverlay from "@/components/ui/NoiseOverlay";
+import Script from "next/script";
+
 
 const syne = Syne({
   variable: "--font-syne",
@@ -66,6 +68,16 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-bg-dark text-fg-light font-sans selection:bg-white selection:text-black" suppressHydrationWarning>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-V67KN6T8BD" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-V67KN6T8BD');
+          `}
+        </Script>
         <MotionConfigProvider>
           <NoiseOverlay />
           {children}
