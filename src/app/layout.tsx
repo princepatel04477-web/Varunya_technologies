@@ -4,6 +4,7 @@ import "./globals.css";
 import { MotionConfigProvider } from "@/context/MotionConfigContext";
 import NoiseOverlay from "@/components/ui/NoiseOverlay";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 
 const syne = Syne({
@@ -83,6 +84,7 @@ export default function RootLayout({
           <NoiseOverlay />
           {children}
         </MotionConfigProvider>
+        <Analytics />
       </body>
     </html>
   );
