@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Send, Sparkles, Check, ArrowUpRight, Activity, TrendingUp, Brain, BarChart2, Database, Layers, Shield, Zap, Gauge, Workflow, Globe, Box } from "lucide-react";
+import { Send, Sparkles, Check, ArrowUpRight, Activity, TrendingUp, Brain, BarChart2, Database, Layers, Shield, Zap, Gauge, Workflow, Globe, Box, ShoppingBag } from "lucide-react";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -490,7 +490,118 @@ function SuratTextileExhibitionDashboard() {
   );
 }
 
-const containerVariants = {
+// Project V: Todi Ethnic Order Pipeline Dashboard
+function TodiEthnicDashboard({
+  activeInquiries,
+  monthlyProduction,
+  pipelineRevenue,
+  orderHistory,
+  orderLogs,
+}: {
+  activeInquiries: number;
+  monthlyProduction: number;
+  pipelineRevenue: number[];
+  orderHistory: number[];
+  orderLogs: string[];
+}) {
+  const maxRev = Math.max(...pipelineRevenue, 2.5);
+
+  return (
+    <div className="w-full h-full p-4 md:p-6 bg-[#040406] text-white flex flex-col justify-between font-mono text-[9px] md:text-[10px] select-none">
+      <div className="flex justify-between items-center border-b border-[#d4af37]/20 pb-2 mb-3">
+        <div className="flex items-center gap-2">
+          <ShoppingBag className="w-3.5 h-3.5 text-[#d4af37] animate-pulse" />
+          <span className="text-[#d4af37] font-bold tracking-wider">TODI ETHNIC v1.0</span>
+        </div>
+        <span className="text-[#eae6df]/45 tracking-widest text-[8px]">ORDER PIPELINE: ACTIVE</span>
+      </div>
+
+      {/* 3 Metric cards */}
+      <div className="grid grid-cols-3 gap-3 mb-3">
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Active Inquiries</div>
+          <div className="text-lg font-black text-[#eae6df] mt-0.5">{activeInquiries}</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Live Leads</div>
+        </div>
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Monthly Prod.</div>
+          <div className="text-lg font-black text-[#eae6df] mt-0.5">{monthlyProduction.toLocaleString()}</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Units/Month</div>
+        </div>
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Pipeline Rev.</div>
+          <div className="text-lg font-black text-[#10b981] mt-0.5">₹{pipelineRevenue[pipelineRevenue.length - 1].toFixed(1)}Cr</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Quarterly Run</div>
+        </div>
+      </div>
+
+      {/* Order Pipeline Status Bar */}
+      <div className="border border-[#d4af37]/10 rounded bg-black/40 p-3 mb-3">
+        <div className="text-[7px] text-[#d4af37]/60 font-bold tracking-widest uppercase mb-2">Order Pipeline</div>
+        <div className="grid grid-cols-5 gap-2 text-[7px] text-center">
+          {[
+            { label: "Inquiry", pct: 85 },
+            { label: "Sample", pct: 65 },
+            { label: "Order", pct: 72 },
+            { label: "Production", pct: 55 },
+            { label: "Dispatch", pct: 38 },
+          ].map((stage) => (
+            <div key={stage.label}>
+              <div className="h-14 flex items-end justify-center mb-1">
+                <div
+                  className="w-full rounded-t"
+                  style={{
+                    height: `${stage.pct}%`,
+                    backgroundColor:
+                      stage.pct > 70
+                        ? "rgba(184, 138, 11, 0.7)"
+                        : stage.pct > 50
+                        ? "rgba(184, 138, 11, 0.4)"
+                        : "rgba(139, 26, 43, 0.5)",
+                  }}
+                />
+              </div>
+              <div className="text-[#eae6df]/60 font-bold">{stage.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Revenue Pipeline SVG bars */}
+      <div className="flex-grow min-h-[40px] bg-black/40 border border-[#d4af37]/10 rounded p-2 mb-3">
+        <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-widest uppercase mb-1.5">Revenue Pipeline (₹ Cr)</div>
+        <div className="flex items-end gap-[3px] h-full">
+          {pipelineRevenue.map((val, i) => {
+            const hPct = (val / (maxRev + 0.3)) * 100;
+            return (
+              <div key={i} className="flex-grow flex flex-col items-center gap-0.5">
+                <span className="text-[5.5px] text-[#eae6df]/40">{val.toFixed(1)}</span>
+                <div
+                  className="w-full rounded-t"
+                  style={{
+                    height: `${hPct}%`,
+                    minHeight: "2px",
+                    backgroundColor: val > 2.6 ? "rgba(139, 26, 43, 0.6)" : "rgba(184, 138, 11, 0.5)",
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Ticking log feed */}
+      <div className="border-t border-[#d4af37]/20 pt-2 bg-black/60 px-2 py-1.5 rounded h-14 overflow-hidden flex flex-col justify-end text-[7px] text-[#eae6df]/50 leading-relaxed font-mono">
+        {orderLogs.slice(-2).map((log, idx) => (
+          <div key={idx} className="flex gap-2 items-start">
+            <span className="text-[#d4af37] shrink-0">{`>`}</span>
+            <span className="truncate">{log}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -542,6 +653,8 @@ const getIcon = (iconName: string) => {
       return <BarChart2 className="w-5 h-5 text-[#d4af37]" />;
     case "Send":
       return <Send className="w-5 h-5 text-[#d4af37]" />;
+    case "ShoppingBag":
+      return <ShoppingBag className="w-5 h-5 text-[#d4af37]" />;
     default:
       return <Sparkles className="w-5 h-5 text-[#d4af37]" />;
   }
@@ -563,6 +676,11 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
     "CATALOG: MUGASILK JACQUARD CACHE REFRESHED",
     "API GATEWAY: STOCK METADATA SYNCED WITH LOOM CLOUD",
   ]);
+
+  // Todi Ethnic specific states
+  const [activeInquiries, setActiveInquiries] = useState(24);
+  const [monthlyProduction, setMonthlyProduction] = useState(5000);
+  const [pipelineRevenue, setPipelineRevenue] = useState<number[]>([2.1, 2.3, 2.2, 2.5, 2.4, 2.6, 2.7, 2.8]);
 
   // Live ticking simulation
   useEffect(() => {
@@ -619,7 +737,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
             "ERP UPDATE: STITCHING LINE 1 EFFICIENCY AT 98%",
             "DELIVERY PIPELINE: CONCORD BOOTHS PREPARED",
           ];
-        } else {
+        } else if (activeChamber === 3) {
           logTemplates = [
             "EXHIBITING HALLS: 4 ACTIVE VIRTUAL SECTIONS ONLINE",
             "WEBGL PIPELINE: YARN LOOP TEXTURES LOADED (5.2ms)",
@@ -627,13 +745,41 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
             "VIRTUAL DIRECTORY: /exhibitors/surat-looms SYNCED",
             "VISITOR COUNT: 14,204 LIVE REGISTRATIONS TRANSMITTED",
           ];
+        } else if (activeChamber === 4) {
+          logTemplates = [
+            "INQUIRY #482: BRIDAL LEHENGA SET - GOLDEN ZARI WORK",
+            "SAMPLE APPROVED: KANCHIPURAM SILK WITH GOLD THREAD",
+            "PRODUCTION BATCH #204: 50 UNITS GOTA PATTI WORK",
+            "DISPATCH TRIGGERED: ORDER #118 TO DUBAI MARKET",
+            "NEW INQUIRY: CUSTOM SHERWANI WITH GOLD EMBROIDERY",
+          ];
         }
         const randomLog = logTemplates[Math.floor(Math.random() * logTemplates.length)];
         setOrderLogs((prev) => [...prev.slice(1), `[${new Date().toLocaleTimeString()}] ${randomLog}`]);
       }
     }, 2000);
 
-    return () => clearInterval(timer);
+    // Todi Ethnic live simulation
+    const todiTimer = setInterval(() => {
+      if (activeChamber === 4) {
+        setActiveInquiries((prev) => {
+          if (Math.random() > 0.75) {
+            return Math.max(18, Math.min(32, prev + (Math.random() > 0.5 ? 1 : -1)));
+          }
+          return prev;
+        });
+        setPipelineRevenue((prev) => {
+          const change = (Math.random() - 0.45) * 0.12;
+          const next = [...prev.slice(1), parseFloat((prev[prev.length - 1] + change).toFixed(2))];
+          return next;
+        });
+      }
+    }, 2500);
+
+    return () => {
+      clearInterval(timer);
+      clearInterval(todiTimer);
+    };
   }, [activeChamber]);
 
   // Sync state values on chamber transition to fit project profiles
@@ -663,13 +809,22 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
           "INVENTORY AUDIT: SECURING METRICS FOR STITCHING CYCLES",
           "DATABASE SCHEMA: CACHING VENDOR ADDRESSES",
         ]);
-      } else {
+      } else if (activeChamber === 3) {
         setLiveRevenue(14204.0);
         setOrderHistory([14150, 14170, 14190, 14180, 14210, 14200, 14220, 14204]);
         setOrderLogs([
           "EXPO SYSTEM: MULTI-REGION BROADCAST SECURED",
           "WEBGL PIPELINE: COMPILED SHADERS FOR IMMERSIVE YARN DISPLAY",
           "EXHIBIT GATEWAY: VIRTUAL SPACE HOSTED ON VERCEL CDN",
+        ]);
+      } else if (activeChamber === 4) {
+        setActiveInquiries(24);
+        setMonthlyProduction(5000);
+        setPipelineRevenue([2.1, 2.3, 2.2, 2.5, 2.4, 2.6, 2.7, 2.8]);
+        setOrderLogs([
+          "TODI SYSTEM: GOLDEN THREAD EMBROIDERY ENGINE ONLINE",
+          "INQUIRY PORT: 24 ACTIVE LEADS FROM 12 EXPORT MARKETS",
+          "PRODUCTION CONSOLE: 5,000 UNITS/MONTH CAPACITY LOADED",
         ]);
       }
     }, 0);
@@ -1104,6 +1259,102 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
       repo: "https://github.com/princepatel04477-web/STE.git",
       deployment: "https://ste-prototype-f.vercel.app/",
     },
+    {
+      num: "V",
+      title: "TODI ETHNIC",
+      metadata: {
+        author: "PRINCE PATEL",
+        work: { en: "TODI ETHNIC", fr: "TODI ETHNIC" },
+        date: "2025",
+        location: "SURAT, INDIA / RETAIL FASHION",
+        movement: { en: "ETHNIC WEAR MANUFACTURING PIPELINE", fr: "CHAÎNE DE FABRICATION DE VÊTEMENTS ETHNIQUES" },
+      },
+      overview: {
+        en: "A full-scale ethnic wear manufacturing and retail management platform orchestrating order pipelines across 850+ partners and 12 export markets.",
+        fr: "Plateforme de gestion de la fabrication et de la vente au détail de vêtements ethniques orchestrant les pipelines de commandes dans plus de 850 partenaires et 12 marchés d'exportation.",
+      },
+      capabilities: [
+        {
+          icon: "ShoppingBag",
+          title: { en: "Order Pipeline Engine", fr: "Moteur de Pipeline de Commandes" },
+          desc: {
+            en: "Orchestrates Inquiry to Sample to Order to Production to Dispatch from a single dashboard.",
+            fr: "Orchestre la chaîne Devis-Échantillon-Commande-Production-Expédition depuis un tableau de bord unique.",
+          },
+        },
+        {
+          icon: "TrendingUp",
+          title: { en: "Production Analytics", fr: "Analytique de Production" },
+          desc: {
+            en: "Real-time monitoring of 5,000+ monthly units across bridal and occasion wear lines.",
+            fr: "Suivi en temps réel de plus de 5 000 unités mensuelles dans les lignes de vêtements de mariage et de cérémonie.",
+          },
+        },
+        {
+          icon: "Globe",
+          title: { en: "Export Market Hub", fr: "Hub des Marchés d'Exportation" },
+          desc: {
+            en: "Connects with 12 international markets through automated logistics and customs pipelines.",
+            fr: "Se connecte à 12 marchés internationaux via des pipelines logistiques et douaniers automatisés.",
+          },
+        },
+        {
+          icon: "Activity",
+          title: { en: "Live Inquiry Console", fr: "Console de Demandes en Direct" },
+          desc: {
+            en: "Real-time inquiry tracking with automated response routing to 850+ retail partners.",
+            fr: "Suivi des demandes en temps réel avec routage automatisé des réponses vers plus de 850 partenaires.",
+          },
+        },
+      ],
+      techStack: ["NEXT.JS", "REACT", "POSTGRES", "PRISMA", "NODE.JS", "SUPABASE", "REDIS", "TAILWIND"],
+      impact: [
+        { value: "850+", label: { en: "Retail Partners", fr: "Partenaires de Vente au Détail" } },
+        { value: "12", label: { en: "Export Markets", fr: "Marchés d'Exportation" } },
+        { value: "5,000+", label: { en: "Monthly Production", fr: "Production Mensuelle" } },
+      ],
+      story: [
+        { en: "Built to streamline ethnic wear order pipelines across Surat's manufacturing ecosystem.", fr: "Conçu pour rationaliser les pipelines de commandes de vêtements ethniques dans l'écosystème de fabrication de Surat." },
+        { en: "Designed for real-time visibility across 850+ retail partner touchpoints.", fr: "Conçu pour une visibilité en temps réel sur plus de 850 points de contact partenaires." },
+        { en: "Engineered to connect Surat's traditional craftsmanship to 12 global markets.", fr: "Développé pour connecter l'artisanat traditionnel de Surat à 12 marchés mondiaux." },
+      ],
+      chamber: "CHAMBER V",
+      image: "",
+      hotspots: [
+        {
+          id: 1,
+          top: "25%",
+          left: "30%",
+          label: { en: "Order Pipeline Engine", fr: "Moteur de Pipeline de Commandes" },
+          desc: {
+            en: "End-to-end order pipeline from inquiry to dispatch with real-time status tracking.",
+            fr: "Pipeline de commandes de bout en bout, de la demande à l'expédition, avec suivi en temps réel.",
+          },
+        },
+        {
+          id: 2,
+          top: "50%",
+          left: "70%",
+          label: { en: "Production Console", fr: "Console de Production" },
+          desc: {
+            en: "Monitors 5,000+ monthly units across bridal and occasion wear production lines.",
+            fr: "Surveille plus de 5 000 unités mensuelles sur les lignes de production.",
+          },
+        },
+        {
+          id: 3,
+          top: "75%",
+          left: "45%",
+          label: { en: "Global Export Hub", fr: "Hub d'Exportation Mondial" },
+          desc: {
+            en: "Automated logistics pipelines connecting to 12 international export markets.",
+            fr: "Pipelines logistiques automatisés connectés à 12 marchés d'exportation internationaux.",
+          },
+        },
+      ],
+      repo: "https://github.com/princepatel04477-web/Todi_Ethnic.git",
+      deployment: "https://www.todiethnic.com/",
+    },
   ];
   const p = projects[activeChamber];
 
@@ -1183,6 +1434,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                     {activeChamber === 1 && "Nifty Pulse"}
                     {activeChamber === 2 && "Shiveshwar Textiles"}
                     {activeChamber === 3 && "Manasvi Fashion ERP"}
+                    {activeChamber === 4 && "Surat Textile Exhibition"}
                   </span>
                 </div>
                 <div className="flex justify-between text-[#d4af37]">
@@ -1192,6 +1444,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                     {activeChamber === 1 && "Shiveshwar Textiles"}
                     {activeChamber === 2 && "Manasvi Fashion ERP"}
                     {activeChamber === 3 && "Surat Textile Exhibition"}
+                    {activeChamber === 4 && "Todi Ethnic"}
                   </span>
                 </div>
                 <div className="flex justify-between text-[#eae6df]/35">
@@ -1200,7 +1453,8 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                     {activeChamber === 0 && "Shiveshwar Textiles"}
                     {activeChamber === 1 && "Manasvi Fashion ERP"}
                     {activeChamber === 2 && "Surat Textile Exhibition"}
-                    {activeChamber === 3 && "End Of Exhibition"}
+                    {activeChamber === 3 && "Todi Ethnic"}
+                    {activeChamber === 4 && "End Of Exhibition"}
                   </span>
                 </div>
               </div>
@@ -1208,7 +1462,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
           </motion.div>
           {/* CENTER COLUMN: Masterpiece artwork presentation container */}
           <div className="lg:col-span-5 flex flex-col justify-center items-center gap-6 w-full order-1 lg:order-none z-10">
-            {activeChamber < 4 ? (
+            {activeChamber < 5 ? (
               // Exhibit Chamber (I, II, III, IV)
               <motion.div
                 ref={containerRef}
@@ -1250,6 +1504,15 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                     )}
                     {activeChamber === 3 && (
                       <SuratTextileExhibitionDashboard />
+                    )}
+                    {activeChamber === 4 && (
+                      <TodiEthnicDashboard
+                        activeInquiries={activeInquiries}
+                        monthlyProduction={monthlyProduction}
+                        pipelineRevenue={pipelineRevenue}
+                        orderHistory={orderHistory}
+                        orderLogs={orderLogs}
+                      />
                     )}
                   </div>
 
