@@ -70,6 +70,7 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
       speed?: number;
       orbitRadius?: number;
       phase?: number;
+      amplitude?: number;
     }
 
     const particles: Particle[] = [];
@@ -162,6 +163,47 @@ export default function ChamberCanvas({ activeChamber }: ChamberCanvasProps) {
             });
           }
         }
+      } else if (chamber === 4) {
+        // Todi Ethnic: Golden flowing fabric-like sine threads
+        const count = isMobile ? 30 : 80;
+        for (let i = 0; i < count; i++) {
+          const isRed = Math.random() < 0.12;
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            ox: Math.random() * width,
+            oy: Math.random() * height,
+            vx: Math.random() * 0.15 - 0.075,
+            vy: -(Math.random() * 0.3 + 0.1),
+            size: Math.random() * 1.5 + 1,
+            color: isRed
+              ? `rgba(139, 26, 43, ${Math.random() * 0.15 + 0.1})`
+              : `rgba(184, 138, 11, ${Math.random() * 0.2 + 0.15})`,
+            amplitude: Math.random() * 40 + 20,
+            phase: Math.random() * Math.PI * 2,
+            speed: Math.random() * 0.002 + 0.001,
+          });
+        }
+      } else if (currentChamber === 4) {
+        // Render Todi Ethnic golden thread particles
+        particles.forEach((p) => {
+          p.y += p.vy;
+          p.x += Math.sin((Date.now() * 0.001) * (p.speed || 1) + (p.phase || 0)) * (p.amplitude || 40);
+
+          // Screen wrapping
+          if (p.y < 0) { p.y = height; p.x = Math.random() * width; }
+          if (p.y > height) { p.y = 0; p.x = Math.random() * width; }
+
+          // Soft breathing pulse
+          const pulse = Math.sin((Date.now() * 0.001) * 1.2 + (p.phase || 0)) * 0.05 + 0.12;
+          const match = p.color.match(/rgba\((\d+), (\d+), (\d+), /);
+          ctx.beginPath();
+          ctx.fillStyle = match && parseInt(match[1]) === 139
+            ? `rgba(139, 26, 43, ${pulse})`
+            : `rgba(184, 138, 11, ${pulse})`;
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
       } else {
         // Capabilities & Contact: Ambient drifting stars
         const count = isMobile ? 25 : 80;
