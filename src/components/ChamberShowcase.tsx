@@ -1257,7 +1257,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
         },
       ],
       repo: "https://github.com/princepatel04477-web/STE.git",
-      deployment: "https://ste-prototype-f.vercel.app/",
+      deployment: "https://www.stesurat.com/",
     },
     {
       num: "V",

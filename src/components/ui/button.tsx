@@ -4,12 +4,13 @@ import { cn } from "@/lib/utils"; // Assumes shadcn/ui setup
 export interface AnimatedLayerButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  loading?: boolean;
 }
 
 const AnimatedLayerButton = React.forwardRef<
   HTMLButtonElement,
   AnimatedLayerButtonProps
->(({ className, children, ...props }, ref) => {
+>(({ className, children, loading = false, ...props }, ref) => {
   return (
     <button
       className={cn(
@@ -25,8 +26,10 @@ const AnimatedLayerButton = React.forwardRef<
       ref={ref}
       {...props}
     >
-      {/* Inline Spinner - 20px x 20px circle with split red and white border */}
-      <div className="w-5 h-5 mr-3 rounded-full border-2 border-red-500 border-t-white animate-spin shrink-0" />
+      {/* Inline Spinner - render only when loading is true */}
+      {loading && (
+        <div className="w-5 h-5 mr-3 rounded-full border-2 border-red-500 border-t-white animate-spin shrink-0" />
+      )}
       
       {/* Text layer */}
       <span className="z-10 font-semibold tracking-widest text-[1.1em] text-white">
