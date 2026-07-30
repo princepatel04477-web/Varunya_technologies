@@ -7,6 +7,9 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+// Static export cannot render unknown slugs on demand; allowedSlugs is exhaustive.
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return allowedSlugs.map((slug) => ({ slug }));
 }

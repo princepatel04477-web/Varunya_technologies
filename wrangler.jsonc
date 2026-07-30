@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "varunya-technologies",
+  "compatibility_date": "2026-07-30",
+  // Keep the workers.dev URL alive as a staging target. Declaring `routes`
+  // disables it by default, so this must stay explicit.
+  "workers_dev": true,
+  // A route, not a custom_domain. The apex A records still point at a dead
+  // Vercel origin, and a custom_domain attach refuses to coexist with them
+  // (error 100117). A route intercepts the already-proxied hostname before the
+  // origin is consulted, so those stale records are simply never used.
+  "routes": [
+    {
+      "pattern": "varunyatechnologies.com/*",
+      "zone_id": "a362c82af6aa1c7e225f245f68bc5d2d"
+    },
+    {
+      "pattern": "www.varunyatechnologies.com/*",
+      "zone_id": "a362c82af6aa1c7e225f245f68bc5d2d"
+    }
+  ],
+  "assets": {
+    // Next.js `output: "export"` writes the prerendered site here.
+    "directory": "./out",
+    // Export has no trailingSlash config, so pages land as `<route>.html`.
+    // auto-trailing-slash resolves both /route and /route/ to that file.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
