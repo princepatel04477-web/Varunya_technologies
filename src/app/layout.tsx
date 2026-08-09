@@ -24,9 +24,12 @@ export const metadata: Metadata = {
   keywords: ["Digital Agency India", "WebGL Agency", "AI SaaS Development", "Next.js Agency", "Creative Technology", "Surat Tech Agency"],
   metadataBase: new URL("https://varunyatechnologies.com"),
   icons: {
-    icon: "/VT_logo.png",
-    shortcut: "/VT_logo.png",
-    apple: "/VT_logo.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Varunya Technologies",
