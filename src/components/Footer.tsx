@@ -13,15 +13,13 @@ export default function Footer() {
           {/* Logo & Agency details */}
           <div className="md:col-span-4 flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 overflow-hidden rounded-md border border-white/10 flex items-center justify-center bg-black/60">
-                <Image
-                  src="/VT_logo.png"
-                  alt="Varunya Logo"
-                  width={28}
-                  height={28}
-                  className="object-contain"
-                />
-              </div>
+              <Image
+                src="/VT_logo.png"
+                alt="Varunya Logo"
+                width={36}
+                height={36}
+                className="w-9 h-9 object-contain"
+              />
               <span className="font-display font-bold text-base tracking-wider">
                 VARUNYA TECHNOLOGIES
               </span>
