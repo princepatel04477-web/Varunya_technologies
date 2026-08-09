@@ -29,7 +29,6 @@ export default function HomeClient() {
   const [exhibitionMode, setExhibitionMode] = useState(false);
   const [isEntered, setIsEntered] = useState(false);
   const [activeChamber, setActiveChamber] = useState(0);
-  const [language, setLanguage] = useState<"en" | "fr">("en");
   const [soundOn, setSoundOn] = useState(false);
   const [loaderFinished, setLoaderFinished] = useState(false);
 
@@ -169,7 +168,7 @@ export default function HomeClient() {
       <SmoothScroll>
         <div className="bg-[#050507] text-[#eae6df] font-sans antialiased selection:bg-white/10 selection:text-white">
           <Loader onComplete={() => setLoaderFinished(true)} />
-          <Navbar />
+          <Navbar onEnterExhibition={enterExhibition} />
           <Hero onEnterExhibition={enterExhibition} loaderFinished={loaderFinished} />
           <main>
             <LazySection>
@@ -211,8 +210,6 @@ export default function HomeClient() {
         {!isEntered ? (
           <ChamberIntro
             key="intro"
-            language={language}
-            setLanguage={setLanguage}
             soundOn={soundOn}
             setSoundOn={setSoundOn}
             onEnter={handleEnter}
@@ -222,8 +219,6 @@ export default function HomeClient() {
           <div key="exhibition" className="relative min-h-screen w-full flex flex-col justify-between">
             {/* Header, Footer, and Pagination Controls */}
             <ChamberControls
-              language={language}
-              setLanguage={setLanguage}
               soundOn={soundOn}
               setSoundOn={setSoundOn}
               activeChamber={activeChamber}
@@ -234,7 +229,6 @@ export default function HomeClient() {
             {/* Chamber Exhibition Content */}
             <ChamberShowcase
               activeChamber={activeChamber}
-              language={language}
             />
           </div>
         )}

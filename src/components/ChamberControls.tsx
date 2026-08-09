@@ -4,8 +4,6 @@ import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface ChamberControlsProps {
-  language: "en" | "fr";
-  setLanguage: (lang: "en" | "fr") => void;
   soundOn: boolean;
   setSoundOn: (sound: boolean) => void;
   activeChamber: number;
@@ -14,32 +12,19 @@ interface ChamberControlsProps {
 }
 
 export default function ChamberControls({
-  language,
-  setLanguage,
   soundOn,
   setSoundOn,
   activeChamber,
   setActiveChamber,
   onExit,
 }: ChamberControlsProps) {
-  const content = {
-    en: {
-      exhibition: "STUDIO EXHIBITION",
-      soundActive: "SOUND ON",
-      soundMute: "MUTE",
-      next: "NEXT CHAMBER",
-      prev: "PREV CHAMBER",
-    },
-    fr: {
-      exhibition: "EXPOSITION DU STUDIO",
-      soundActive: "SON ACTIF",
-      soundMute: "SOURDINE",
-      next: "CHAMBRE SUIVANTE",
-      prev: "CHAMBRE PRÉCÉDENTE",
-    },
+  const t = {
+    exhibition: "STUDIO EXHIBITION",
+    soundActive: "SOUND ON",
+    soundMute: "MUTE",
+    next: "NEXT CHAMBER",
+    prev: "PREV CHAMBER",
   };
-
-  const t = content[language];
 
   return (
     <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-6 md:p-12 z-40 select-none">
@@ -71,26 +56,6 @@ export default function ChamberControls({
         </button>
 
         <div className="flex items-center gap-3 sm:gap-6 text-[10px] sm:text-xs font-semibold tracking-widest">
-          {/* Lang Toggle */}
-          <div className="flex items-center gap-2 border-r border-[#eae6df]/10 pr-3 sm:pr-6">
-            <button
-              onClick={() => setLanguage("en")}
-              className={`hover:text-[#d4af37] transition-colors duration-300 ${
-                language === "en" ? "text-[#d4af37]" : "text-[#eae6df]/40"
-              }`}
-            >
-              EN
-            </button>
-            <span className="text-[#eae6df]/20">/</span>
-            <button
-              onClick={() => setLanguage("fr")}
-              className={`hover:text-[#d4af37] transition-colors duration-300 ${
-                language === "fr" ? "text-[#d4af37]" : "text-[#eae6df]/40"
-              }`}
-            >
-              FR
-            </button>
-          </div>
 
           {/* Sound Toggle */}
           <button

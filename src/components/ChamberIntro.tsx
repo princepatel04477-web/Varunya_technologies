@@ -5,8 +5,6 @@ import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface ChamberIntroProps {
-  language: "en" | "fr";
-  setLanguage: (lang: "en" | "fr") => void;
   soundOn: boolean;
   setSoundOn: (sound: boolean) => void;
   onEnter: () => void;
@@ -14,33 +12,19 @@ interface ChamberIntroProps {
 }
 
 export default function ChamberIntro({
-  language,
-  setLanguage,
   soundOn,
   setSoundOn,
   onEnter,
   onClose,
 }: ChamberIntroProps) {
-  const content = {
-    en: {
-      headline: "Four projects. One digital ecosystem.",
-      sub: "Each chamber reveals a unique product, platform, or business solution. Explore the architecture, technology, and impact behind every project engineered by Varunya Technologies.",
-      enter: "ENTER",
-      soundWarning: "ACTIVATE SOUND TO ENTER IN SILENCE",
-      soundActive: "SOUND ON",
-      soundMute: "MUTE",
-    },
-    fr: {
-      headline: "Quatre projets. Un écosystème numérique.",
-      sub: "Chaque chambre révèle un produit, une plateforme ou une solution d'affaires unique. Explorez l'architecture, la technologie et l'impact de chaque projet conçu par Varunya Technologies.",
-      enter: "ENTRER",
-      soundWarning: "ACTIVEZ LE SON POUR ENTRER DANS LE SILENCE",
-      soundActive: "SON ACTIF",
-      soundMute: "SOURDINE",
-    },
+  const t = {
+    headline: "Our projects. One digital ecosystem.",
+    sub: "Each chamber reveals a unique product, platform, or business solution. Explore the architecture, technology, and impact behind every project engineered by Varunya Technologies.",
+    enter: "ENTER",
+    soundWarning: "ACTIVATE SOUND TO ENTER IN SILENCE",
+    soundActive: "SOUND ON",
+    soundMute: "MUTE",
   };
-
-  const t = content[language];
 
   return (
     <motion.div
@@ -84,28 +68,6 @@ export default function ChamberIntro({
             <span className="sm:hidden">EXIT</span>
             <span className="hidden sm:inline">EXIT TO SITE</span>
           </button>
-          <span className="text-white/10">|</span>
-
-          {/* Lang Toggle */}
-          <div className="flex items-center gap-2 border-r border-[#eae6df]/10 pr-3 sm:pr-6">
-            <button
-              onClick={() => setLanguage("en")}
-              className={`hover:text-[#d4af37] transition-colors duration-300 ${
-                language === "en" ? "text-[#d4af37]" : "text-white/40"
-              }`}
-            >
-              EN
-            </button>
-            <span className="text-white/20">/</span>
-            <button
-              onClick={() => setLanguage("fr")}
-              className={`hover:text-[#d4af37] transition-colors duration-300 ${
-                language === "fr" ? "text-[#d4af37]" : "text-white/40"
-              }`}
-            >
-              FR
-            </button>
-          </div>
 
           {/* Sound Toggle */}
           <button
@@ -188,7 +150,7 @@ export default function ChamberIntro({
           {t.soundWarning}
         </span>
         <div className="flex gap-1.5 justify-center">
-          {[...Array(4)].map((_, i) => (
+          {[...Array(5)].map((_, i) => (
             <div
               key={i}
               className={`w-1.5 h-1.5 rounded-full border border-white/20 ${

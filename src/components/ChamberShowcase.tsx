@@ -52,7 +52,7 @@ interface ProjectData {
 
 interface ChamberShowcaseProps {
   activeChamber: number;
-  language: "en" | "fr";
+  language?: "en" | "fr";
 }
 
 // ── SUBCOMPONENTS: HIGH-FIDELITY INTERACTIVE PROJECT DASHBOARDS ──
@@ -660,7 +660,7 @@ const getIcon = (iconName: string) => {
   }
 };
 
-export default function ChamberShowcase({ activeChamber, language }: ChamberShowcaseProps) {
+export default function ChamberShowcase({ activeChamber, language = "en" }: ChamberShowcaseProps) {
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 50 });
@@ -1392,32 +1392,24 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
 
             <div className="space-y-5 text-[8.5px] tracking-[0.3em] font-medium text-[#eae6df]/45">
               <div className="border-b border-[#eae6df]/5 pb-3">
-                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">
-                  {language === "en" ? "AUTHOR" : "AUTEUR"}
-                </span>
+                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">AUTHOR</span>
                 <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.author}</span>
               </div>
               <div className="border-b border-[#eae6df]/5 pb-3">
-                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">
-                  {language === "en" ? "WORK" : "ŒUVRE"}
-                </span>
-                <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.work[language]}</span>
+                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">WORK</span>
+                <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.work.en}</span>
               </div>
               <div className="border-b border-[#eae6df]/5 pb-3">
                 <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">DATE</span>
                 <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.date}</span>
               </div>
               <div className="border-b border-[#eae6df]/5 pb-3">
-                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">
-                  {language === "en" ? "LOCATION" : "LIEU"}
-                </span>
+                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">LOCATION</span>
                 <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.location}</span>
               </div>
               <div>
-                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">
-                  {language === "en" ? "MOVEMENT" : "MOUVEMENT"}
-                </span>
-                <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.movement[language]}</span>
+                <span className="text-[#d4af37]/70 block font-semibold mb-1 text-[7.5px]">MOVEMENT</span>
+                <span className="text-[#eae6df]/90 text-[10.5px] font-sans font-light tracking-widest uppercase block mt-0.5">{p.metadata.movement.en}</span>
               </div>
             </div>
 
@@ -1572,10 +1564,10 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                                 className="absolute left-1/2 -translate-x-1/2 bottom-10 w-56 p-4 rounded bg-[#070709]/98 border border-[#d4af37]/35 shadow-2xl text-center pointer-events-none z-30"
                               >
                                 <span className="text-[9px] tracking-[0.25em] text-[#d4af37] font-bold block mb-1.5 uppercase">
-                                  {hs.label[language]}
+                                  {hs.label.en}
                                 </span>
                                 <p className="text-[10.5px] text-[#eae6df]/75 leading-relaxed font-sans font-light">
-                                  {hs.desc[language]}
+                                  {hs.desc.en}
                                 </p>
                                 <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-[#d4af37]/35" />
                               </motion.div>
@@ -1637,7 +1629,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                   {p.title}
                 </h3>
                 <p className="text-[15px] lg:text-[16px] text-[#eae6df]/60 leading-[1.8] font-sans font-light tracking-wide max-w-[60ch]">
-                  {p.overview[language]}
+                  {p.overview.en}
                 </p>
               </motion.div>
 
@@ -1653,8 +1645,8 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                         {getIcon(cap.icon)}
                       </div>
                       <div className="space-y-1">
-                        <h4 className="text-sm font-semibold tracking-wider text-white uppercase">{cap.title[language]}</h4>
-                        <p className="text-[12px] text-[#eae6df]/60 leading-relaxed font-light">{cap.desc[language]}</p>
+                        <h4 className="text-sm font-semibold tracking-wider text-white uppercase">{cap.title.en}</h4>
+                        <p className="text-[12px] text-[#eae6df]/60 leading-relaxed font-light">{cap.desc.en}</p>
                       </div>
                     </div>
                   ))}
@@ -1684,7 +1676,7 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                   {p.impact.map((imp, idx) => (
                     <div key={idx} className="flex flex-col gap-2 p-3 rounded-lg bg-zinc-950/40 border border-white/5 text-center">
                       <span className="text-xl font-black text-[#d4af37] tracking-tight">{imp.value}</span>
-                      <span className="text-[8px] tracking-widest text-[#eae6df]/45 uppercase font-medium leading-tight">{imp.label[language]}</span>
+                      <span className="text-[8px] tracking-widest text-[#eae6df]/45 uppercase font-medium leading-tight">{imp.label.en}</span>
                     </div>
                   ))}
                 </div>
@@ -1697,9 +1689,9 @@ export default function ChamberShowcase({ activeChamber, language }: ChamberShow
                 </span>
                 <div className="space-y-4">
                   {p.story.map((st, idx) => (
-                    <div key={idx} className="flex gap-4 p-4 rounded-lg bg-[#0a0a0c]/80 border-l-2 border-[#d4af37] border-y border-r border-white/5">
+                    <div key={idx} className="flex gap-4 p-4 rounded-lg bg-[#0a0a0c]/80 border border-white/10 hover:border-[#d4af37]/30 transition-colors duration-300">
                       <span className="text-xs font-bold text-[#d4af37]/50 font-mono">0{idx + 1}</span>
-                      <p className="text-[13px] text-[#eae6df]/75 font-light tracking-wide leading-relaxed">{st[language]}</p>
+                      <p className="text-[13px] text-[#eae6df]/75 font-light tracking-wide leading-relaxed">{st.en}</p>
                     </div>
                   ))}
                 </div>

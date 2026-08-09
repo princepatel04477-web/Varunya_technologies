@@ -6,7 +6,11 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function Navbar() {
+interface NavbarProps {
+  onEnterExhibition?: () => void;
+}
+
+export default function Navbar({ onEnterExhibition }: NavbarProps) {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,7 +38,21 @@ export default function Navbar() {
     }, 300);
   };
 
+  const handleNavClick = (item: { label: string; id: string; isChamber?: boolean }) => {
+    setMobileMenuOpen(false);
+    if (item.isChamber) {
+      if (onEnterExhibition) {
+        onEnterExhibition();
+      } else {
+        window.location.hash = "3d";
+      }
+      return;
+    }
+    scrollToSection(item.id);
+  };
+
   const navItems = [
+    { label: "Projects", id: "3d", isChamber: true },
     { label: "Capabilities", id: "capabilities" },
     { label: "Network Map", id: "tech-map" },
     { label: "Process", id: "process" },
@@ -74,7 +92,7 @@ export default function Navbar() {
             {navItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavClick(item)}
                 className="relative text-sm tracking-widest text-muted hover:text-white transition-colors duration-300 font-medium py-1 group cursor-pointer"
               >
                 <span>{item.label}</span>
@@ -121,7 +139,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 + idx * 0.08, duration: 0.5 }}
                   key={item.label}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavClick(item)}
                   className="text-left text-3xl font-display font-light tracking-wide text-fg-light hover:text-white transition-colors duration-300"
                 >
                   <span className="font-mono text-xs text-white/30 mr-4">0{idx + 1}</span>
@@ -136,7 +154,7 @@ export default function Navbar() {
                 onClick={() => scrollToSection("contact")}
                 className="text-left text-3xl font-display font-light tracking-wide text-[#d4af37] hover:text-[#e5c158] transition-colors duration-300 mt-4 border-t border-white/15 pt-8"
               >
-                <span className="font-mono text-xs text-[#d4af37]/45 mr-4">04</span>
+                <span className="font-mono text-xs text-[#d4af37]/45 mr-4">05</span>
                 {"Let's Talk"}
               </motion.button>
             </div>

@@ -59,6 +59,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom Selection & Focus Ring */
+::selection {
+  background-color: rgba(212, 175, 55, 0.25);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline-offset: 4px;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -67,11 +78,11 @@ body {
   background: #050507;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(212, 175, 55, 0.25);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(212, 175, 55, 0.5);
 }
 
 /* Text Mask Reveal animation */
