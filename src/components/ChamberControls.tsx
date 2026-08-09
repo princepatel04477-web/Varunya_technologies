@@ -91,7 +91,7 @@ export default function ChamberControls({
       <div className="w-full flex justify-between items-center pointer-events-auto">
         {/* Prev button */}
         <button
-          onClick={() => setActiveChamber((activeChamber - 1 + 5) % 5)}
+          onClick={() => setActiveChamber((activeChamber - 1 + 7) % 7)}
           className="text-[9px] tracking-[0.2em] font-bold text-white/30 hover:text-[#eae6df] transition-colors duration-300"
         >
           {t.prev}
@@ -99,7 +99,7 @@ export default function ChamberControls({
 
         {/* Center Roman Numeral Indicators */}
         <div className="flex items-center gap-3 justify-center">
-          {["I", "II", "III", "IV", "V"].map((num, i) => (
+          {["I", "II", "III", "IV", "V", "VI", "VII"].map((num, i) => (
             <div key={i} className="flex items-center gap-3">
               <button
                 onClick={() => setActiveChamber(i)}
@@ -111,7 +111,7 @@ export default function ChamberControls({
               >
                 {num}
               </button>
-              {i < 4 && (
+              {i < 6 && (
                 <span className="text-[6px] text-white/5 opacity-20 select-none">•</span>
               )}
             </div>
@@ -120,7 +120,7 @@ export default function ChamberControls({
 
         {/* Next button */}
         <button
-          onClick={() => setActiveChamber((activeChamber + 1) % 5)}
+          onClick={() => setActiveChamber((activeChamber + 1) % 7)}
           className="text-[9px] tracking-[0.2em] font-bold text-white/30 hover:text-[#eae6df] transition-colors duration-300"
         >
           {t.next}

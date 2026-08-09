@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Send, Sparkles, Check, ArrowUpRight, Activity, TrendingUp, Brain, BarChart2, Database, Layers, Shield, Zap, Gauge, Workflow, Globe, Box, ShoppingBag } from "lucide-react";
+import { Send, Sparkles, Check, ArrowUpRight, Activity, TrendingUp, Brain, BarChart2, Database, Layers, Shield, Zap, Gauge, Workflow, Globe, Box, ShoppingBag, Building2, Ticket, Calendar, Users } from "lucide-react";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -601,7 +601,135 @@ function TodiEthnicDashboard({
       </div>
     </div>
   );
-}const containerVariants = {
+}
+
+// Project VI: Trivoxa Group Corporate Portal & Subsidiary Dashboard
+function TrivoxaGroupDashboard() {
+  return (
+    <div className="w-full h-full p-4 md:p-6 bg-[#040406] text-white flex flex-col justify-between font-mono text-[9px] md:text-[10px] select-none">
+      <div className="flex justify-between items-center border-b border-[#d4af37]/20 pb-2 mb-3">
+        <div className="flex items-center gap-2">
+          <Building2 className="w-3.5 h-3.5 text-[#d4af37] animate-pulse" />
+          <span className="text-[#d4af37] font-bold tracking-wider">TRIVOXA GROUP v2.4</span>
+        </div>
+        <span className="text-[#eae6df]/45 tracking-widest text-[8px]">ENTERPRISE GATEWAY: ONLINE</span>
+      </div>
+
+      {/* 3 Metric Cards */}
+      <div className="grid grid-cols-3 gap-3 mb-3">
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Active Subsidiaries</div>
+          <div className="text-lg font-black text-[#eae6df] mt-0.5">8</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Global Entities</div>
+        </div>
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Cross-Sync Rate</div>
+          <div className="text-lg font-black text-[#10b981] mt-0.5">+180%</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Efficiency Gain</div>
+        </div>
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Uptime SLA</div>
+          <div className="text-lg font-black text-[#eae6df] mt-0.5">99.99%</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Enterprise Reliability</div>
+        </div>
+      </div>
+
+      {/* Corporate Division Breakdown */}
+      <div className="border border-[#d4af37]/10 rounded bg-black/40 p-3 mb-3">
+        <div className="text-[7px] text-[#d4af37]/60 font-bold tracking-widest uppercase mb-2">Subsidiary Operations Stream</div>
+        <div className="grid grid-cols-4 gap-2 text-[7px] text-center">
+          {[
+            { label: "Manufacturing", status: "98.4%" },
+            { label: "Global Trade", status: "100%" },
+            { label: "Logistics Hub", status: "99.1%" },
+            { label: "Tech Ventures", status: "100%" },
+          ].map((div, i) => (
+            <div key={i} className="border border-white/5 rounded p-2 bg-[#08080a]">
+              <div className="text-[#eae6df]/80 font-bold truncate mb-1">{div.label}</div>
+              <div className="text-[#d4af37] font-mono text-[9px] font-bold">{div.status}</div>
+              <div className="text-[6px] text-[#10b981] uppercase mt-0.5">● OPERATIONAL</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Ticking log feed */}
+      <div className="border-t border-[#d4af37]/20 pt-2 bg-black/60 px-2 py-1.5 rounded h-14 overflow-hidden flex flex-col justify-end text-[7px] text-[#eae6df]/50 leading-relaxed font-mono">
+        <div className="flex gap-2 items-start">
+          <span className="text-[#d4af37] shrink-0">{`>`}</span>
+          <span className="truncate">TRIVOXA CORE: SUBSIDIARY GATEWAY SYNC COMPLETED</span>
+        </div>
+        <div className="flex gap-2 items-start">
+          <span className="text-[#d4af37] shrink-0">{`>`}</span>
+          <span className="truncate">LOGISTICS PIPELINE: 12 EXPORT NODES VERIFIED</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Project VII: Nuvent Event Management Platform Dashboard
+function NuventDashboard() {
+  return (
+    <div className="w-full h-full p-4 md:p-6 bg-[#040406] text-white flex flex-col justify-between font-mono text-[9px] md:text-[10px] select-none">
+      <div className="flex justify-between items-center border-b border-[#d4af37]/20 pb-2 mb-3">
+        <div className="flex items-center gap-2">
+          <Ticket className="w-3.5 h-3.5 text-[#d4af37] animate-pulse" />
+          <span className="text-[#d4af37] font-bold tracking-wider">NUVENT EVENT SUITE v3.1</span>
+        </div>
+        <span className="text-[#eae6df]/45 tracking-widest text-[8px]">LIVE EVENT MONITOR: ACTIVE</span>
+      </div>
+
+      {/* 3 Metric Cards */}
+      <div className="grid grid-cols-3 gap-3 mb-3">
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Check-In Latency</div>
+          <div className="text-lg font-black text-[#10b981] mt-0.5">&lt;18ms</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">QR Scanner Rate</div>
+        </div>
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Tickets Issued</div>
+          <div className="text-lg font-black text-[#eae6df] mt-0.5">48,290</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Live Event Volume</div>
+        </div>
+        <div className="border border-[#d4af37]/15 rounded bg-[#09090c] p-2 text-center">
+          <div className="text-[6.5px] text-[#d4af37]/60 font-bold tracking-wider uppercase">Attendee Engagement</div>
+          <div className="text-lg font-black text-[#d4af37] mt-0.5">+240%</div>
+          <div className="text-[6px] text-[#eae6df]/35 uppercase tracking-wider">Session Activity</div>
+        </div>
+      </div>
+
+      {/* Live Venue & Spatial Schedule */}
+      <div className="border border-[#d4af37]/10 rounded bg-black/40 p-3 mb-3">
+        <div className="text-[7px] text-[#d4af37]/60 font-bold tracking-widest uppercase mb-2">Live Venue & Session Monitor</div>
+        <div className="space-y-1.5 text-[7.5px]">
+          <div className="flex justify-between items-center bg-[#08080a] p-1.5 rounded border border-white/5">
+            <span className="text-[#eae6df]/90 font-bold">Main Stage Keynote</span>
+            <span className="text-[#10b981] font-mono font-bold">LIVE (2,450 Attendees)</span>
+          </div>
+          <div className="flex justify-between items-center bg-[#08080a] p-1.5 rounded border border-white/5">
+            <span className="text-[#eae6df]/90 font-bold">AI Tech Workshop B</span>
+            <span className="text-[#d4af37] font-mono font-bold">CAPACITY 98%</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Ticking log feed */}
+      <div className="border-t border-[#d4af37]/20 pt-2 bg-black/60 px-2 py-1.5 rounded h-14 overflow-hidden flex flex-col justify-end text-[7px] text-[#eae6df]/50 leading-relaxed font-mono">
+        <div className="flex gap-2 items-start">
+          <span className="text-[#d4af37] shrink-0">{`>`}</span>
+          <span className="truncate">NUVENT CHECK-IN: GATE 04 QR PASS VALIDATED (0.012s)</span>
+        </div>
+        <div className="flex gap-2 items-start">
+          <span className="text-[#d4af37] shrink-0">{`>`}</span>
+          <span className="truncate">SPATIAL SCHEDULE: KEYNOTE SESSION 02 COMMENCING</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -655,6 +783,14 @@ const getIcon = (iconName: string) => {
       return <Send className="w-5 h-5 text-[#d4af37]" />;
     case "ShoppingBag":
       return <ShoppingBag className="w-5 h-5 text-[#d4af37]" />;
+    case "Building2":
+      return <Building2 className="w-5 h-5 text-[#d4af37]" />;
+    case "Ticket":
+      return <Ticket className="w-5 h-5 text-[#d4af37]" />;
+    case "Calendar":
+      return <Calendar className="w-5 h-5 text-[#d4af37]" />;
+    case "Users":
+      return <Users className="w-5 h-5 text-[#d4af37]" />;
     default:
       return <Sparkles className="w-5 h-5 text-[#d4af37]" />;
   }
@@ -1355,10 +1491,170 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
       repo: "https://github.com/princepatel04477-web/Todi_Ethnic.git",
       deployment: "https://www.todiethnic.com/",
     },
+    {
+      num: "VI",
+      title: "TRIVOXA GROUP",
+      metadata: {
+        author: "PRINCE PATEL",
+        work: { en: "TRIVOXA GROUP", fr: "TRIVOXA GROUP" },
+        date: "2026",
+        location: "GLOBAL / INDUSTRIAL HUB",
+        movement: { en: "MULTI-SECTOR ENTERPRISE ECOSYSTEM", fr: "ÉCOSYSTÈME D'ENTREPRISE MULTISECTORIEL" },
+      },
+      overview: {
+        en: "A multi-sector corporate portal and enterprise management ecosystem powering Trivoxa Group's diversified global business operations.",
+        fr: "Portail d'entreprise multisectoriel alimentant les opérations mondiales diversifiées du groupe Trivoxa.",
+      },
+      capabilities: [
+        {
+          icon: "Building2",
+          title: { en: "Executive Intelligence Dashboard", fr: "Tableau de Bord Exécutif" },
+          desc: {
+            en: "Aggregates real-time business telemetry and subsidiary operational performance metrics across all group divisions.",
+            fr: "Agrège la télémétrie commerciale en temps réel et les métriques de performance filiales.",
+          },
+        },
+        {
+          icon: "Workflow",
+          title: { en: "Enterprise Resource Gateway", fr: "Passerelle de Ressources D'entreprise" },
+          desc: {
+            en: "Standardizes supply chain logistics, multi-subsidiary compliance, and unified client management.",
+            fr: "Standardise la logistique, la conformité multi-filiales et la gestion client.",
+          },
+        },
+        {
+          icon: "Globe",
+          title: { en: "Global Expansion Engine", fr: "Moteur d'Expansion Mondiale" },
+          desc: {
+            en: "Orchestrates multi-currency financial reporting and international subsidiary compliance frameworks.",
+            fr: "Orchestre le reporting financier multidevise et les cadres de conformité internationaux.",
+          },
+        },
+      ],
+      techStack: ["Next.js 16", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS", "Docker"],
+      impact: [
+        { label: { en: "Telemetry Load", fr: "Télémétrie" }, value: "Sub-50ms" },
+        { label: { en: "Cross-Sync Rate", fr: "Taux de Synchro" }, value: "+180%" },
+        { label: { en: "Enterprise Uptime", fr: "Disponibilité" }, value: "99.99%" },
+      ],
+      story: [
+        {
+          en: "Designed a unified corporate portal to consolidate data streams from multiple business verticals under Trivoxa Group.",
+          fr: "Conçu un portail d'entreprise unifié pour consolider les flux de données de plusieurs secteurs.",
+        },
+        {
+          en: "Implemented secure API gateways and role-based access control for subsidiary managers and executive leadership.",
+          fr: "Mis en œuvre des passerelles API sécurisées et un contrôle d'accès basé sur les rôles.",
+        },
+        {
+          en: "Deployed serverless telemetry pipelines to monitor operational KPIs and global supply chain logistics in real time.",
+          fr: "Déployé des pipelines de télémétrie serverless pour surveiller les KPI opérationnels et la logistique.",
+        },
+      ],
+      hotspots: [
+        {
+          id: 1,
+          top: "22%",
+          left: "30%",
+          label: { en: "Subsidiary Telemetry", fr: "Télémétrie Filiales" },
+          desc: { en: "Real-time sync across 8 global business units.", fr: "Synchro en temps réel sur 8 unités d'affaires." },
+        },
+        {
+          id: 2,
+          top: "65%",
+          left: "70%",
+          label: { en: "Enterprise Gateway", fr: "Passerelle D'entreprise" },
+          desc: { en: "Unified role-based management & security.", fr: "Gestion et sécurité unifiées basées sur les rôles." },
+        },
+      ],
+      chamber: "VI",
+      image: "/aether_os.png",
+      repo: "https://github.com/princepatel04477-web/Trivoxa_Group.git",
+      deployment: "https://www.trivoxagroup.com/",
+    },
+    {
+      num: "VII",
+      title: "NUVENT",
+      chamber: "VII",
+      image: "/solas_spatial.png",
+      metadata: {
+        author: "PRINCE PATEL",
+        work: { en: "NUVENT", fr: "NUVENT" },
+        date: "2026",
+        location: "DIGITAL ENTERTAINMENT & EVENT HUB",
+        movement: { en: "AGENTIC EVENT MANAGEMENT PLATFORM", fr: "PLATEFORME DE GESTION D'ÉVÉNEMENTS" },
+      },
+      overview: {
+        en: "An all-in-one event management software platform engineering real-time ticketing, attendee analytics, and automated spatial venue scheduling.",
+        fr: "Plateforme logicielle de gestion d'événements tout-en-un avec billetterie et analyse en temps réel.",
+      },
+      capabilities: [
+        {
+          icon: "Ticket",
+          title: { en: "Real-time Ticketing Engine", fr: "Moteur de Billetterie Temps Réel" },
+          desc: {
+            en: "High-throughput QR check-in scanner and sub-second ticket issuance pipeline.",
+            fr: "Scanner de contrôle d'accès QR haute performance et émission sous la seconde.",
+          },
+        },
+        {
+          icon: "Calendar",
+          title: { en: "Automated Venue Scheduler", fr: "Planificateur de Lieu Automatisé" },
+          desc: {
+            en: "Dynamic spatial allocation tool for multi-track conferences, expos, and large-scale corporate events.",
+            fr: "Allocation spatiale dynamique pour conférences multi-sessions et expos.",
+          },
+        },
+        {
+          icon: "Users",
+          title: { en: "Live Attendee Telemetry", fr: "Télémétrie Participants En Direct" },
+          desc: {
+            en: "Generates real-time heatmaps, engagement analytics, and instant speaker feedback metrics.",
+            fr: "Génère des cartes thermiques et des analyses d'engagement en temps réel.",
+          },
+        },
+      ],
+      techStack: ["Next.js 16", "WebSockets", "Redis", "PostgreSQL", "Tailwind CSS", "Stripe API"],
+      impact: [
+        { label: { en: "Check-In Latency", fr: "Latence Contrôle" }, value: "<18ms" },
+        { label: { en: "Tickets Issued", fr: "Billets Émis" }, value: "50k+" },
+        { label: { en: "Attendee Engagement", fr: "Engagement" }, value: "+240%" },
+      ],
+      story: [
+        {
+          en: "Engineered a high-performance event management engine capable of handling flash sales and peak ticket checkout demands.",
+          fr: "Conçu un moteur de gestion d'événements capable de gérer les ventes flash.",
+        },
+        {
+          en: "Built a real-time check-in scanner and attendee management suite with offline-first synchronization capabilities.",
+          fr: "Créé une suite de contrôle d'accès avec synchronisation hors ligne.",
+        },
+        {
+          en: "Integrated dynamic venue floorplan mapping and automated schedule management for event organizers and attendees.",
+          fr: "Intégré la cartographie dynamique des lieux et la gestion automatique des plannings.",
+        },
+      ],
+      hotspots: [
+        {
+          id: 1,
+          top: "25%",
+          left: "35%",
+          label: { en: "Instant QR Scanner", fr: "Scanner QR Instantané" },
+          desc: { en: "Sub-18ms QR pass verification and gate check-in.", fr: "Vérification de pass QR sous 18ms." },
+        },
+        {
+          id: 2,
+          top: "60%",
+          left: "65%",
+          label: { en: "Spatial Floorplan Mapping", fr: "Cartographie du Lieu" },
+          desc: { en: "Dynamic seating and session capacity tracking.", fr: "Suivi dynamique de capacité des sessions." },
+        },
+      ],
+      repo: "https://github.com/princepatel04477-web/Nuvent.git",
+      deployment: "https://www.nuvent.app/",
+    },
   ];
-  const p = projects[activeChamber];
-
-
+  const p = projects[activeChamber] || projects[0];
 
   return (
     <div className="relative w-full h-screen overflow-y-auto lg:overflow-hidden flex items-start lg:items-center justify-center pt-20 pb-16 lg:py-16 px-4 sm:px-8 lg:px-12 select-none overflow-x-hidden">
@@ -1427,6 +1723,8 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
                     {activeChamber === 2 && "Shiveshwar Textiles"}
                     {activeChamber === 3 && "Manasvi Fashion ERP"}
                     {activeChamber === 4 && "Surat Textile Exhibition"}
+                    {activeChamber === 5 && "Todi Ethnic"}
+                    {activeChamber === 6 && "Trivoxa Group"}
                   </span>
                 </div>
                 <div className="flex justify-between text-[#d4af37]">
@@ -1437,6 +1735,8 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
                     {activeChamber === 2 && "Manasvi Fashion ERP"}
                     {activeChamber === 3 && "Surat Textile Exhibition"}
                     {activeChamber === 4 && "Todi Ethnic"}
+                    {activeChamber === 5 && "Trivoxa Group"}
+                    {activeChamber === 6 && "Nuvent"}
                   </span>
                 </div>
                 <div className="flex justify-between text-[#eae6df]/35">
@@ -1446,7 +1746,9 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
                     {activeChamber === 1 && "Manasvi Fashion ERP"}
                     {activeChamber === 2 && "Surat Textile Exhibition"}
                     {activeChamber === 3 && "Todi Ethnic"}
-                    {activeChamber === 4 && "End Of Exhibition"}
+                    {activeChamber === 4 && "Trivoxa Group"}
+                    {activeChamber === 5 && "Nuvent"}
+                    {activeChamber === 6 && "End Of Exhibition"}
                   </span>
                 </div>
               </div>
@@ -1454,8 +1756,8 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
           </motion.div>
           {/* CENTER COLUMN: Masterpiece artwork presentation container */}
           <div className="lg:col-span-5 flex flex-col justify-center items-center gap-6 w-full order-1 lg:order-none z-10">
-            {activeChamber < 5 ? (
-              // Exhibit Chamber (I, II, III, IV)
+            {activeChamber < 7 ? (
+              // Exhibit Chamber (I to VII)
               <motion.div
                 ref={containerRef}
                 onMouseMove={handleContainerMouseMove}
@@ -1505,6 +1807,12 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
                         orderHistory={orderHistory}
                         orderLogs={orderLogs}
                       />
+                    )}
+                    {activeChamber === 5 && (
+                      <TrivoxaGroupDashboard />
+                    )}
+                    {activeChamber === 6 && (
+                      <NuventDashboard />
                     )}
                   </div>
 

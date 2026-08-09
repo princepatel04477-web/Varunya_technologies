@@ -75,5 +75,43 @@ export const projects: Project[] = [
     result: "Automated 92% of initial deal-flow screenings, reducing the screening lifecycle from 5 days to under 15 minutes per pitch.",
     techStack: ["Node.js", "Python", "LangChain", "PostgreSQL", "pgvector", "Next.js"],
     liveUrl: "https://www.varunyatechnologies.com"
+  },
+  {
+    id: "trivoxa-group",
+    number: "04",
+    client: "Trivoxa Group",
+    shortDesc: "Multi-Sector Corporate Portal & Enterprise Management Ecosystem",
+    tags: ["Next.js 16", "TypeScript", "PostgreSQL", "Docker"],
+    year: 2026,
+    duration: "12 weeks",
+    role: "Enterprise Architecture & Full-Stack Development",
+    outcome: "+180% Cross-Division Sync",
+    heroImage: "/aether_os.png",
+    slug: "trivoxa-group",
+    overview: "A multi-sector corporate portal and enterprise management ecosystem powering Trivoxa Group's diversified global business operations.",
+    problem: "Managing multiple business verticals, multi-subsidiary compliance, and global supply chain logistics across separate legacy systems created operational siloing.",
+    solution: "We engineered a unified Next.js 16 corporate gateway with role-based access control, real-time telemetry pipelines, and integrated subsidiary reporting.",
+    result: "Achieved sub-50ms telemetry load times, +180% cross-division synchronization efficiency, and 99.99% enterprise uptime.",
+    techStack: ["Next.js 16", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS", "Docker"],
+    liveUrl: "https://www.trivoxagroup.com"
+  },
+  {
+    id: "nuvent",
+    number: "05",
+    client: "Nuvent",
+    shortDesc: "Agentic Event Management & Live Ticketing Suite",
+    tags: ["Next.js 16", "WebSockets", "Redis", "Stripe"],
+    year: 2026,
+    duration: "10 weeks",
+    role: "Full-Stack Development & Real-Time Engineering",
+    outcome: "<18ms QR Check-In Latency",
+    heroImage: "/solas_spatial.png",
+    slug: "nuvent",
+    overview: "An all-in-one event management software platform engineering real-time ticketing, attendee analytics, and automated spatial venue scheduling.",
+    problem: "Event organizers faced high latency during peak ticket sales and slow entrance check-in bottlenecks during large-scale conferences and expos.",
+    solution: "We built an offline-first QR check-in engine with Redis-backed ticket queues, live WebSocket attendee telemetry, and dynamic spatial venue floorplan mapping.",
+    result: "Reduced entrance check-in latency to under 18ms and handled over 50,000 concurrent ticket checkouts without downtime.",
+    techStack: ["Next.js 16", "WebSockets", "Redis", "PostgreSQL", "Tailwind CSS", "Stripe API"],
+    liveUrl: "https://www.nuvent.app"
   }
 ];

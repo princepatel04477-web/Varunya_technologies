@@ -121,7 +121,7 @@ export default function HomeClient() {
 
       if (e.deltaY > 0) {
         // Scroll down
-        if (activeChamber < 4) {
+        if (activeChamber < 6) {
           setActiveChamber((prev) => prev + 1);
           lastScrollTime = now;
         } else {

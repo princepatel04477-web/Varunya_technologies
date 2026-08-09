@@ -150,7 +150,7 @@ export default function ChamberIntro({
           {t.soundWarning}
         </span>
         <div className="flex gap-1.5 justify-center">
-          {[...Array(5)].map((_, i) => (
+          {[...Array(7)].map((_, i) => (
             <div
               key={i}
               className={`w-1.5 h-1.5 rounded-full border border-white/20 ${
