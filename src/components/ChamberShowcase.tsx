@@ -1361,7 +1361,7 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
 
 
   return (
-    <div className="relative w-full h-screen overflow-y-auto lg:overflow-y-hidden flex items-start lg:items-center justify-center py-28 lg:py-20 px-6 md:px-16 lg:px-24 select-none overflow-x-hidden">
+    <div className="relative w-full h-screen overflow-y-auto lg:overflow-hidden flex items-start lg:items-center justify-center pt-20 pb-16 lg:py-16 px-4 sm:px-8 lg:px-12 select-none overflow-x-hidden">
       {/* 1. Large backdrop ghostly chamber numbers to set atmospheric scale */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden select-none">
         <span className="font-display font-black text-[20vw] text-white/[0.007] tracking-tighter leading-none select-none uppercase transition-all duration-1000 mix-blend-overlay">
@@ -1376,7 +1376,7 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full max-w-[85vw] xl:max-w-[80vw] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 xl:gap-28 items-center z-10 pb-12 lg:pb-0"
+          className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center z-10 pb-12 lg:pb-0"
         >
           {/* LEFT COLUMN: Metadata - Refined editorial typography */}
           <motion.div
@@ -1384,7 +1384,7 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -25 }}
             transition={{ duration: 1.0, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-3 flex flex-col justify-center h-full border-l lg:border-l-0 lg:border-r border-[#eae6df]/5 lg:pr-12 pl-4 lg:pl-0 order-2 lg:order-none"
+            className="lg:col-span-3 flex flex-col justify-center h-full border-l lg:border-l-0 lg:border-r border-[#eae6df]/5 lg:pr-6 pl-4 lg:pl-0 order-2 lg:order-none"
           >
             <span className="text-[8.5px] tracking-[0.4em] text-[#d4af37] font-semibold block mb-8 uppercase select-none">
               EXHIBIT {p.num}
@@ -1612,20 +1612,20 @@ export default function ChamberShowcase({ activeChamber, language = "en" }: Cham
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -25 }}
             transition={{ duration: 1.0, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-4 flex flex-col justify-between lg:max-h-[78vh] lg:overflow-y-auto pr-2 pl-4 lg:pl-8 py-2 order-3 lg:order-none border-l border-[#eae6df]/5 custom-scrollbar scroll-smooth"
+            className="lg:col-span-4 flex flex-col justify-between lg:max-h-[75vh] lg:overflow-y-auto pr-2 pl-4 lg:pl-6 py-2 order-3 lg:order-none border-l border-[#eae6df]/5 custom-scrollbar scroll-smooth"
           >
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-16"
+              className="space-y-12 lg:space-y-16"
             >
               {/* 01. PROJECT OVERVIEW */}
               <motion.div variants={childVariants} className="space-y-4">
                 <span className="text-[9px] tracking-[0.4em] font-bold text-[#d4af37] block uppercase">
                   01. PROJECT OVERVIEW
                 </span>
-                <h3 className="text-[28px] lg:text-[40px] font-normal leading-[1.2] text-white tracking-tight" style={{ fontFamily: "var(--font-editorial)" }}>
+                <h3 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-normal leading-[1.2] text-white tracking-tight break-words" style={{ fontFamily: "var(--font-editorial)" }}>
                   {p.title}
                 </h3>
                 <p className="text-[15px] lg:text-[16px] text-[#eae6df]/60 leading-[1.8] font-sans font-light tracking-wide max-w-[60ch]">

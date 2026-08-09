@@ -56,6 +56,15 @@ export default function ChamberControls({
         </button>
 
         <div className="flex items-center gap-3 sm:gap-6 text-[10px] sm:text-xs font-semibold tracking-widest">
+          {/* Exit / Return to Site button */}
+          <button
+            onClick={onExit}
+            className="text-white/40 hover:text-white transition-colors duration-300 cursor-pointer font-bold uppercase text-[9px] sm:text-[10px] tracking-widest"
+          >
+            <span className="sm:hidden">EXIT</span>
+            <span className="hidden sm:inline">EXIT TO SITE</span>
+          </button>
+          <span className="text-white/10">|</span>
 
           {/* Sound Toggle */}
           <button
