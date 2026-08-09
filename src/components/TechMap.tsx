@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import { useMotionConfig } from "@/context/MotionConfigContext";
 
 interface TechNode {
@@ -1506,22 +1507,13 @@ export default function TechMap() {
                       animate={{ rotate: 360 }}
                       transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
                     />
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="w-16 h-16 text-cyan-400 fill-current relative z-10 drop-shadow-[0_0_12px_rgba(6,182,212,0.7)]"
-                    >
-                      <polygon
-                        points="12,2 22,8 22,16 12,22 2,16 2,8"
-                        className="fill-none stroke-current"
-                        strokeWidth="1.2"
-                      />
-                      <polygon
-                        points="12,5 19,9 19,15 12,19 5,15 5,9"
-                        className="fill-none stroke-cyan-500/25"
-                        strokeWidth="0.8"
-                      />
-                      <circle cx="12" cy="12" r="2.5" />
-                    </svg>
+                    <Image
+                      src="/VT_logo.png"
+                      alt="Varunya Core Logo"
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                    />
 
                     <span className="text-[10px] uppercase tracking-[0.25em] text-white mt-3.5 font-bold font-mono relative z-10">
                       Varunya Core

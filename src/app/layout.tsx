@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   description: "We design and engineer spatial web experiences, AI systems, and custom software for ambitious brands. Based in Surat, India.",
   keywords: ["Digital Agency India", "WebGL Agency", "AI SaaS Development", "Next.js Agency", "Creative Technology", "Surat Tech Agency"],
   metadataBase: new URL("https://varunyatechnologies.com"),
+  icons: {
+    icon: "/VT_logo.png",
+    shortcut: "/VT_logo.png",
+    apple: "/VT_logo.png",
+  },
   openGraph: {
     title: "Varunya Technologies",
     description: "High-concept editorial aesthetics. Solid engineering.",

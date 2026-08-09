@@ -41,7 +41,7 @@ export default function ChamberControls({
             alt="Varunya Logo"
             width={112}
             height={112}
-            className="h-16 w-16 sm:h-28 sm:w-28 object-contain group-hover:scale-105 transition-transform duration-300 invert hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]"
+            className="h-16 w-16 sm:h-28 sm:w-28 object-contain group-hover:scale-105 transition-transform duration-300 hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]"
             priority
           />
           <span className="hidden sm:inline-block h-[1px] w-6 bg-[#d4af37]/35" />
